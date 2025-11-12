@@ -1,1 +1,4 @@
 TODO.md
+REPORT.*
+*.pdf
+!report/*.pdf

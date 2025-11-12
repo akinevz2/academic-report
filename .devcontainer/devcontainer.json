@@ -1,0 +1,74 @@
+{
+	"name": "Individual Final Year Project",
+	"image": "mcr.microsoft.com/devcontainers/base:debian",
+	"features": {
+		// aidance in cli navigation, ease of use features
+		"ghcr.io/devcontainers/features/common-utils:2": {
+			"installZsh": true,
+			"configureZshAsDefaultShell": true,
+			"installOhMyZsh": true,
+			"installOhMyZshConfig": true,
+			"upgradePackages": true,
+			"username": "vscode",
+			"userUid": "automatic",
+			"userGid": "automatic"
+		},
+		"ghcr.io/prulloac/devcontainer-features/latex": {
+			"mirror": "https://mirrors.mit.edu/CTAN/systems/texlive/tlnet",
+			"packages": [
+				"xcolor",
+				"etoolbox",
+				"booktabs",
+				"mdwtools",
+				"fancyvrb",
+				"beamer"
+			]
+		},
+		// cli program for report compilation from markdwon to pdf
+		"ghcr.io/rocker-org/devcontainer-features/pandoc": {
+			"version": "latest"
+		}
+	},
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+	// Configure tool-specific properties.
+	// "customizations": {},
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// Maintainer Comment:
+	// below username is selected as the most frequenly used.
+	// ensure running as rootless user as much as possible.
+	"customizations": {
+		"vscode": {
+			// Maintainer Comment:
+			// uncomment below once the devcontainer has been inspected.
+			// the below enable smart editor features.
+			"extensions": [
+				// "redhat.vscode-quarkus",
+				// "vscjava.vscode-java-pack",
+				// "redhat.vscode-xml",
+				// "redhat.vscode-yaml",
+				// "redhat.java",
+				// "svelte.svelte-vscode"
+			]
+		}
+	},
+	// auto configure ports for viewing the webapp
+	"portsAttributes": {
+		"3000": {
+			"label": "Application",
+			"onAutoForward": "ignore"
+		},
+		"8080": {
+			"label": "Quarkus Dev Server",
+			"onAutoForward": "openBrowserOnce"
+		}
+	},
+	// below variables are passed as global to the devcontainer
+	"containerEnv": {
+		"EDITOR": "code"
+	},
+	"containerUser": "me"
+	
+}

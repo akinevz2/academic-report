@@ -1,13 +1,15 @@
-.PHONY: report
-all: REPORT.pdf open
+.PHONY: report *.md
+all: REPORT open
 
-%.pdf: ../src/%.md ../src/**/*.md
-	pandoc $< doc/references.bib \
+../src/**/*.md: 
+	@echo reading $@
+
+REPORT: ../report/REPORT.md ../src/**/*.md
+	pandoc $< ../report/references.bib \
 		--lua-filter=include-md.lua \
 		--citeproc \
 		--number-sections \
-		-o $@
-	touch $@
+		-o $@.pdf
 
 # figure out how to set type to beamer
 %.pdf: ../presentations/%.md
@@ -17,8 +19,8 @@ all: REPORT.pdf open
 		--number-sections \
 		-o $@
 
-open: REPORT.pdf
+open: REPORT
 	code REPORT.pdf
 
 clean: 
-	rm REPORT.pdf
+	rm ../report/REPORT.pdf

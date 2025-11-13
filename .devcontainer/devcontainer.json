@@ -69,6 +69,5 @@
 	"containerEnv": {
 		"EDITOR": "code"
 	},
-	"containerUser": "me"
 	
 }

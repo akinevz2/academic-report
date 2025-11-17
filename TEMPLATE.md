@@ -2,12 +2,10 @@
 author: |
     Kirill Nevzorov\
     under supervision \
-    of Prof. Julie Weeds \
-    University of Sussex\
+    of University of Sussex\
     School of Engineering and Informatics
-email: "kn253@sussex.ac.uk"
 title: |
-    Proposal: Modelling Virtual Project Aides
+    Project Proposal
 date: \today{}
 geometry: margin=2cm
 documentclass: article
@@ -18,8 +16,8 @@ bibliography: |
 header-includes: |
     \usepackage{fancyhdr}
     \pagestyle{fancy}
-    \fancyhead[L]{ Proposal: Modelling Virtual Project Aides }
-    \fancyhead[R]{181472 Kirill Nevzorov}
+    \fancyhead[L]{ Project Proposal }
+    \fancyhead[R]{Kirill Nevzorov}
     \fancyfoot[C]{\thepage}
     \renewcommand{\headrulewidth}{0.4pt}
 ...

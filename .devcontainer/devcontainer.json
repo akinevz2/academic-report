@@ -77,5 +77,6 @@
 	"containerEnv": {
 		"EDITOR": "code"
 	}
-	
+	// don't forget to install git credentials helper
+	// for pushing signed commits
 }

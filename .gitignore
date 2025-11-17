@@ -2,3 +2,5 @@ TODO.md
 REPORT.*
 *.pdf
 !report/*.pdf
+TEMPLATE.md
+schematics/

@@ -18,6 +18,7 @@ header-includes: |
     \pagestyle{fancy}
     \fancyhead[L]{ Project Proposal }
     \fancyhead[R]{Kirill Nevzorov}
+    
     \fancyfoot[C]{\thepage}
     \renewcommand{\headrulewidth}{0.4pt}
 ...

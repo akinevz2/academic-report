@@ -27,6 +27,14 @@
 		// cli program for report compilation from markdwon to pdf
 		"ghcr.io/rocker-org/devcontainer-features/pandoc": {
 			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/java": {
+			"installMaven": true,
+			"installAnt": false,
+			"installGradle": false,
+			"installGroovy": false,
+			"mavenVersion": "latest",
+			"jdkDistro": "open"
 		}
 	},
 	// Features to add to the dev container. More info: https://containers.dev/features.
@@ -68,6 +76,6 @@
 	// below variables are passed as global to the devcontainer
 	"containerEnv": {
 		"EDITOR": "code"
-	},
+	}
 	
 }

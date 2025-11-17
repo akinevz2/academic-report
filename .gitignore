@@ -1,6 +1,9 @@
 TODO.md
-REPORT.*
+
 *.pdf
-!report/*.pdf
-TEMPLATE.md
+*.md
+
+REPORT.*
+!TEMPLATE.md
+
 schematics/

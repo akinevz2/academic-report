@@ -1,26 +1,24 @@
 .PHONY: report *.md
 all: REPORT open
 
-../src/**/*.md: 
-	@echo reading $@
-
-REPORT: ../report/REPORT.md ../src/**/*.md
-	pandoc $< ../report/references.bib \
-		--lua-filter=include-md.lua \
+REPORT: ../report/REPORT.md ./src/**.md
+	pandoc $< ./src/references.bib \
+		--lua-filter=./include-md.lua \
 		--citeproc \
 		--number-sections \
 		-o $@.pdf
 
 # figure out how to set type to beamer
-%.pdf: ../presentations/%.md
+%: ../presentations/%.md
 	pandoc $< \
-		--lua-filter=include-md.lua \
+		--lua-filter=./include-md.lua \
 		--citeproc \
+		-V beamer.theme=Hannover
 		--number-sections \
-		-o $@
+		-o $@.pdf
 
 open: REPORT
-	code REPORT.pdf
+	code ../report/REPORT.pdf
 
 clean: 
 	rm ../report/REPORT.pdf

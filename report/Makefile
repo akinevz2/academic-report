@@ -16,7 +16,7 @@ open: REPORT.pdf
 		-o $@.pdf
 
 REPORT.pdf: REPORT.md src/**.md
-	pandoc $< ./src/references.bib \
+	pandoc $< ./references.bib \
 		--toc -s \
 		--lua-filter=./include-md.lua \
 		--citeproc \

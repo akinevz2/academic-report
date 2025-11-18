@@ -1,5 +1,6 @@
 {
 	"name": "Individual Final Year Project",
+	// "image": "nvidia/cuda:11.8.0-devel-ubuntu22.04", 
 	"image": "mcr.microsoft.com/devcontainers/base:debian",
 	"features": {
 		// aidance in cli navigation, ease of use features
@@ -35,6 +36,11 @@
 			"installGroovy": false,
 			"mavenVersion": "latest",
 			"jdkDistro": "open"
+		},
+		"ghcr.io/devcontainers/features/docker-in-docker": {
+			"version": "latest",
+			"moby": false,
+			"mobyBuildxVersion": false
 		}
 	},
 	// Features to add to the dev container. More info: https://containers.dev/features.
@@ -79,7 +85,11 @@
 	// below variables are passed as global to the devcontainer
 	"containerEnv": {
 		"EDITOR": "code"
-	}
+	},
+	"containerUser": "vscode",
 	// don't forget to install git credentials helper
 	// for pushing signed commits
+	// run args wont be necessary for this container
+	// testing should be done of a remote machine
+	"postStartCommand": "cd .devcontainer/ && docker compose up"
 }

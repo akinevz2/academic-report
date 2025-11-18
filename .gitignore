@@ -1,10 +1,12 @@
+BUILDING.log
 *.pdf
 
-REPORT.*
 !TEMPLATE.md
+REPORT.*
 
 !1.pdf
 !2.pdf
 
 schematics/
 BUILDING.log
+TODO.md

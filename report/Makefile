@@ -1,4 +1,4 @@
-all: 1 2 REPORT.pdf
+all: REPORT.pdf
 
 report: open
 

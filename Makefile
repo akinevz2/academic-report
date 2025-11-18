@@ -1,4 +1,4 @@
-all: REMINDERS
+all: report
 
 REMINDERS: presentations report
 UPDATES: presentation report quarkus-test

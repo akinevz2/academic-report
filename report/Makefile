@@ -1,7 +1,13 @@
-.PHONY: report *.md
-all: REPORT open
+all: clean 1 2 report
 
-# figure out how to set type to beamer
+report: clean open
+
+clean: 
+	rm REPORT.pdf
+
+open: REPORT.pdf
+	code -r ../report/REPORT.pdf
+
 %: ./presentations/%.md
 	pandoc $< \
 		--lua-filter=./include-md.lua \
@@ -9,16 +15,10 @@ all: REPORT open
 		-t beamer \
 		-o $@.pdf
 
-REPORT: ../report/REPORT.md ./src/**.md
+REPORT.pdf: REPORT.md src/**.md
 	pandoc $< ./src/references.bib \
+		--toc -s \
 		--lua-filter=./include-md.lua \
 		--citeproc \
-		--number-sections \
-		-o $@.pdf
+		-o $@
 
-
-open: REPORT
-	code ../report/REPORT.pdf
-
-clean: 
-	rm ../report/REPORT.pdf

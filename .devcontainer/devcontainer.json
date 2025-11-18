@@ -68,6 +68,10 @@
 			"label": "Application",
 			"onAutoForward": "ignore"
 		},
+		"5005": {
+			"label": "Debugging Port",
+			"onAutoForward": "ignore"
+		},
 		"8080": {
 			"label": "Quarkus Dev Server",
 			"onAutoForward": "openBrowserOnce"

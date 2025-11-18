@@ -1,10 +1,14 @@
 all: REMINDERS
 
-REMINDERS: presentations report quarkus-test
+REMINDERS: presentations report
+UPDATES: presentation report quarkus-test
 
-report: 
+REPORT: report
+
+report: ./report/**/*.md
 	@echo >> BUILDING REPORT PDF
-	cd report && make REPORT
+	cd report && make report
+	cd report && make open
 
 quarkus-test:
 	@echo >> BUILDING QUARKUS APP. NOT SUPPORTED YET
@@ -21,3 +25,5 @@ presentations:
 		pdf_name=$${filename%.md}.pdf; \
 		echo "Building $$pdf_name"; \
 		make "$$pdf_name"; done
+
+.PHONY: all

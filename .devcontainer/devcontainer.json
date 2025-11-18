@@ -91,5 +91,6 @@
 	// for pushing signed commits
 	// run args wont be necessary for this container
 	// testing should be done of a remote machine
-	"postStartCommand": "cd .devcontainer/ && docker compose up"
+
+	// "postStartCommand": "cd .devcontainer/ && docker compose up"
 }

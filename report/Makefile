@@ -1,12 +1,12 @@
-all: clean 1 2 report
+all: 1 2 REPORT.pdf
 
-report: clean open
+report: open
 
 clean: 
 	rm REPORT.pdf
 
 open: REPORT.pdf
-	code -r ../report/REPORT.pdf
+	code ../report/REPORT.pdf
 
 %: ./presentations/%.md
 	pandoc $< \

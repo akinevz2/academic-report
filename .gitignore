@@ -10,3 +10,6 @@ REPORT.*
 schematics/
 BUILDING.log
 TODO.md
+
+report/src/
+Notes.md

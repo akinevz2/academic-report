@@ -1,0 +1,4 @@
+You can use markdown links to recursively include .md files within this folder
+The "main entry point" to the repo's code structure is called ../REPORT.md
+It generates ../REPORT.pdf
+NOTE: the Makefile is in the folder above. This folder is for report components

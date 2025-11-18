@@ -11,5 +11,8 @@ schematics/
 BUILDING.log
 TODO.md
 
-report/src/
+report/src/*.md
 Notes.md
+
+!report
+!report/src/

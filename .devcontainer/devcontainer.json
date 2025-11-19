@@ -63,7 +63,8 @@
 				"vscjava.vscode-java-pack",
 				"vscjava.vscode-maven",
 				"redhat.vscode-quarkus",
-				"James-Yu.latex-workshop"
+				"James-Yu.latex-workshop",
+				"ms-vscode.live-server"
 			]
 		}
 	},

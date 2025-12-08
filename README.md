@@ -5,7 +5,7 @@ This repository contains the markdown files and scripts necessary to build acade
 The intended use case is to produce documents in the pdf format easily.
 
 Academic use only. Commercial use prohibited.
-Repository's home is at github.com/akinevz2/academic-report-pub.
+Repository's home is at github.com/akinevz2/academic-report-buildscripts.
 
 Please respect the author's choices.
 

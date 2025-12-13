@@ -86,10 +86,9 @@
 	"containerEnv": {
 		"EDITOR": "code"
 	},
-	"containerUser": "vscode",
+	"containerUser": "vscode"
 	// don't forget to install git credentials helper
 	// for pushing signed commits
 	// run args wont be necessary for this container
 	// testing should be done of a remote machine
-	"postStartCommand": "cd .devcontainer/ && docker compose up"
 }

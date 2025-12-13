@@ -27,3 +27,7 @@ presentations:
 		make "$$pdf_name"; done
 
 .PHONY: all
+
+hz: 
+	@echo here's your hertz's formula
+	@echo "zcr_hz = sum(1 for i in range(1, len(signal)) if signal[i-1] * signal[i] < 0) * (sample_rate / (2 * (len(signal) - 1)))" >> hz_formula.terse

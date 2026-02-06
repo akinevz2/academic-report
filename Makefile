@@ -1,29 +1,24 @@
-all: report
+all: REPORT.pdf
 
-REMINDERS: presentations report
-UPDATES: presentation report quarkus-test
+report: open
 
-REPORT: report
+clean: 
+	rm REPORT.pdf
 
-report: ./report/**/*.md
-	@echo >> BUILDING.log REPORT PDF
-	cd report && make report
-	cd report && make open
+open: REPORT.pdf
+	code REPORT.pdf
 
-quarkus-test:
-	@echo >> BUILDING.log QUARKUS APP. NOT SUPPORTED YET
-	cd schematics/schematics && mvn quarkus:test
+%: ./presentations/%.md
+	pandoc $< \
+		--lua-filter=./include-md.lua \
+		--citeproc \
+		-t beamer \
+		-o $@.pdf
 
-quarkus-build:
-	@echo >> BUILDING.log QUARKUS APP. NOT SUPPORTED YET
-	cd schematics/schematics && mvn quarkus:build
+REPORT.pdf: REPORT.md src/**.md
+	pandoc $< ./references.bib \
+		--toc -s \
+		--lua-filter=./include-md.lua \
+		--citeproc \
+		-o $@
 
-presentations:
-	@echo >> BUILDING.log PRESENTATIONS PDFS
-	@cd report/ && for presentation in presentations/*.md; do \
-		filename=$${presentation##*/}; \
-		pdf_name=$${filename%.md}; \
-		echo "Building $$pdf_name"; \
-		make "$$pdf_name"; done
-
-.PHONY: all

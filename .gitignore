@@ -1,12 +1,8 @@
 BUILDING.log
-*.pdf
+!*.pdf
 
 !TEMPLATE.md
-REPORT.*
-
-!1.pdf
-!2.pdf
-!3.pdf
+!REPORT.*
 
 schematics/
 TODO.md

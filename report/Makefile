@@ -1,38 +1,24 @@
 all: REPORT.pdf
-
-report: open
+.PHONY: report clean open
 
 clean: 
 	rm REPORT.pdf
 
-open: REPORT.pdf
+open: report
 	code ../report/REPORT.pdf
 
-PANDOC_ARGS = -t revealjs -s -V revealjs-url=https://unpkg.com/reveal.js/ --include-in-header=./presentations/slides.css.frag -V theme=serif
+report: REPORT.pdf 
 
-5: ./presentations/5.md
+PANDOC_ARGS = -t revealjs -s -V revealjs-url=https://unpkg.com/reveal.js --include-in-header=./presentations/slides.css.html -V theme=serif
+
+%: ./presentations/%.md
 	pandoc $< \
 	 	$(PANDOC_ARGS) \
 		--lua-filter=./include-md.lua \
 		--citeproc \
 		-t revealjs \
-		-o 5.html
-
-4: ./presentations/4.md
-	pandoc $< \
 		--toc -s \
-		--lua-filter=./include-md.lua \
-		--citeproc \
-		-o $@.pdf
-
-
-
-%: ./presentations/%.md
-	pandoc $< \
-		--lua-filter=./include-md.lua \
-		--citeproc \
-		-t beamer \
-		-o $@.pdf
+		-o $@.html
 
 REPORT.pdf: REPORT.md src/**.md
 	pandoc $< \

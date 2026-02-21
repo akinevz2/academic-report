@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Kirill Nevzorov">
+  <title>Programmer loves programming - develops too much code for a report that will never see the light of day</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/theme/serif.css" id="theme">
+  <style>
+  .slides {
+      font-size: 0.75em;
+  }
+  .reveal ul {
+      display: block;
+  }
+  .reveal ol {
+      display: block;
+  }
+
+  img {
+      max-height: 350px !important;
+  }
+
+  figcaption {
+      font-size: 0.6em !important;
+      font-style: italic !important;
+  }
+
+  .subtitle {
+      font-style: italic !important;
+  }
+
+  .date {
+      font-size: 0.75em !important;
+  }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Programmer loves programming - develops too much
+code for a report that will never see the light of day</h1>
+  <p class="author">Kirill Nevzorov</p>
+</section>
+<section id="TOC">
+<nav role="doc-toc"> 
+<ul>
+<li><a href="#/overall-plan">Overall Plan</a></li>
+<li><a href="#/mistake">Mistake</a></li>
+<li><a href="#/pivoting-to-lie-theory">Pivoting to Lie Theory</a></li>
+<li><a href="#/limitation-1">Limitation 1</a></li>
+<li><a href="#/limitation-2">Limitation 2</a></li>
+</ul>
+</nav>
+</section>
+
+<section id="overall-plan" class="slide level1">
+<h1>Overall Plan</h1>
+<p>I jumped on the idea of creating the project slightly before I began
+choosing a supervisor, so in my free time I started setting up the
+project and making a mental plan on what I will be able to immediately
+implement.</p>
+</section>
+<section id="mistake" class="slide level1">
+<h1>Mistake</h1>
+<p>I hadn’t actually read the spec top to bottom, and only later
+realised that the marking will be on the perceived feasibility of the
+project. It is infeasible to build the whole application, as I had
+started with the business idea of publishing it as a consumer-focused
+application, as it was the most viable use case.</p>
+</section>
+<section id="pivoting-to-lie-theory" class="slide level1">
+<h1>Pivoting to Lie Theory</h1>
+<p>I was originally going to develop a framework for user entry. It
+would allow a developer (me) to rapidly reset and compare various
+prompts, and I had slated the aspect of “the LLM will be in a different
+configuration after every prompt run” for later to discuss and
+address.</p>
+<p>The Lie theory approach was supposed to solve this with running the
+model and instead inquiring it about its abilities, to benchmark not its
+stability as a software, but instead its performance as an aid in aiding
+the construction of a software project, plotted against the total
+collection of prompts used to produce text, counted against “resets”
+being new conversations, reboots, etc.</p>
+</section>
+<section id="limitation-1" class="slide level1">
+<h1>Limitation 1</h1>
+<p>I hadn’t constructed an application or a software to produce a tally
+of the resets, which rendered this approach impossible. Instead I
+decided to attempt to write an application which instead would estimate
+the power use for the AI runner, in an attempt to produce a graphical
+readout of the <em>cost</em> of running such an AI in an office or a
+home setting. The intent would be to make the benefits of AI coding
+measurable for future applications, scientific or business-adjacent.</p>
+</section>
+<section id="limitation-2" class="slide level1">
+<h1>Limitation 2</h1>
+<p>Graphing in my native ecosystem, Java, is limited to a very
+particular look and feel. While I am familiar with developing for
+it,</p>
+<p>I needed to write an application that would keep track of all the
+statistics for the project report. Which became apparent suddenly to be
+impossible, as I’d have to backtrack all my findings in utilising the
+LLM for research, and recall all of those metrics using this
+application, as my prompting style had changed during the term so
+far.</p>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js/plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js/plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

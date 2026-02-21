@@ -34,12 +34,12 @@ local function include_markdown_file(source_path)
 
   local parsed = pandoc.read(content, "markdown", PANDOC_OPTIONS)
 
-  -- Recursively process links inside the parsed blocks
-  local function process_para(para)
+  -- Extract .md links from a list of inlines, returning included blocks and remaining inlines
+  local function process_inlines(inlines)
     local result_blocks = {}
     local new_inlines = {}
 
-    for _, inline in ipairs(para.content) do
+    for _, inline in ipairs(inlines) do
       if inline.t == "Link" and inline.target:match("%.md$") and not inline.target:match("^https?://") then
         local linked_path = resolve_path(base_dir, inline.target)
         local included = include_markdown_file(linked_path)
@@ -51,6 +51,13 @@ local function include_markdown_file(source_path)
       end
     end
 
+    return result_blocks, new_inlines
+  end
+
+  -- Process Para blocks (direct links in paragraphs)
+  local function process_para(para)
+    local result_blocks, new_inlines = process_inlines(para.content)
+
     if #new_inlines > 0 then
       table.insert(result_blocks, pandoc.Para(new_inlines))
     end
@@ -58,8 +65,33 @@ local function include_markdown_file(source_path)
     return result_blocks
   end
 
+  -- Process BulletList blocks (links inside list items)
+  local function process_bulletlist(bl)
+    local result_blocks = {}
+
+    for _, item in ipairs(bl.content) do
+      for _, block in ipairs(item) do
+        if block.t == "Plain" or block.t == "Para" then
+          local included, remaining = process_inlines(block.content)
+          for _, blk in ipairs(included) do
+            table.insert(result_blocks, blk)
+          end
+          -- Keep any non-link text
+          if #remaining > 0 then
+            table.insert(result_blocks, pandoc.Para(remaining))
+          end
+        else
+          table.insert(result_blocks, block)
+        end
+      end
+    end
+
+    return result_blocks
+  end
+
   return pandoc.walk_block(pandoc.Div(parsed.blocks), {
-    Para = process_para
+    Para = process_para,
+    BulletList = process_bulletlist
   }).content
 end
 

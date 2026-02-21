@@ -5,19 +5,15 @@ UPDATES: presentation report quarkus-test
 REPORT: report
 
 install:
-	@echo >> BUILDING.log INSTALLING DEPENDENCIES
 	sudo apt-get update
 	sudo apt-get install -y pandoc texlive-xetex texlive-fonts-recommended texlive-xetex
 	sudo apt-get install -y maven
 
 
-report: ./report/**/*.md
-	@echo >> BUILDING.log REPORT PDF
-	cd report && make report
-	cd report && make open
+report: ./report/REPORT.pdf ./report/**/*.md
+	cd report && make clean report open
 
 presentations:
-	@echo >> BUILDING.log PRESENTATIONS PDFS
 	@cd report/ && for presentation in presentations/*.md; do \
 		filename=$${presentation##*/}; \
 		pdf_name=$${filename%.md}; \

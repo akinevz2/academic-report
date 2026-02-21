@@ -1,4 +1,4 @@
-## Report Structure
+## 1.3 Report Structure
 
 This report is organised into six main chapters, followed by appendices:
 

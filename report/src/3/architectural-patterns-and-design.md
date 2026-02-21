@@ -1,6 +1,6 @@
 \pagebreak{}
 
-# Architectural Patterns and Design
+# III. Architectural Patterns and Design
 
 - [LLM Inference Serving Architectures](./3.1/llm-inference-serving-architectures.md)
 - [Backend Selection Strategies](./3.2/backend-selection-strategies.md)

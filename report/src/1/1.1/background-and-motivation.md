@@ -1,3 +1,3 @@
-## Background and Motivation
+## 1.1 Background and Motivation
 
 In order to build useful software...

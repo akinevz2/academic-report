@@ -1,3 +1,3 @@
-## Project Scope and Objectives
+## 1.2 Project Scope and Objectives
 
 We wish to interact with Large Language Models efficiently...

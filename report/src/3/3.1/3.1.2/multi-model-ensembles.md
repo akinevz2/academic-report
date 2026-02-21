@@ -1,1 +1,1 @@
-### Multi-Model Ensembles
+### 3.1.2 Multi-Model Ensembles

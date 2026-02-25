@@ -1,16 +1,15 @@
-all: REMINDERS install UPDATES
+all: REMINDERS UPDATES
 REMINDERS: presentations report
-UPDATES: presentation report quarkus-test
+.PHONY: report
 
 REPORT: report
 
 install:
 	sudo apt-get update
-	sudo apt-get install -y pandoc texlive-xetex texlive-fonts-recommended texlive-xetex
-	sudo apt-get install -y maven
+	sudo apt-get install -y texlive-fonts-recommended texlive-xetex
 
 
-report: ./report/REPORT.pdf ./report/**/*.md
+report: ./report/**/*.md
 	cd report && make clean report open
 
 presentations:
@@ -20,7 +19,6 @@ presentations:
 		echo "Building $$pdf_name"; \
 		make "$$pdf_name"; done
 
-.PHONY: all
 
 hz: 
 	@echo here's your hertz's formula

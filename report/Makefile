@@ -1,24 +1,37 @@
 all: REPORT.pdf
-.PHONY: report clean open
+.PHONY: report clean open server 
 
 clean: 
-	rm REPORT.pdf
+	rm -f REPORT.pdf ./presentations/*.pdf ./presentations/*.html
 
 open: report
 	code ../report/REPORT.pdf
 
 report: REPORT.pdf 
 
-PANDOC_ARGS = -t revealjs -s -V revealjs-url=https://unpkg.com/reveal.js --include-in-header=./presentations/slides.css.html -V theme=serif
+# Find all markdown files in presentations/
+PRESENTATIONS := $(wildcard presentations/*.md)
+# Extract just the names (1, 2, 3, 4, 5, rubymoon)
+PRESENTATION_NAMES := $(notdir $(basename $(PRESENTATIONS)))
 
-%: ./presentations/%.md
-	pandoc $< \
-	 	$(PANDOC_ARGS) \
-		--lua-filter=./include-md.lua \
-		--citeproc \
-		-t revealjs \
-		--toc -s \
-		-o $@.html
+# Build PDF targets: 5.pdf, 4.pdf, etc.
+PDF_TARGETS := $(PRESENTATION_NAMES:=.pdf)
+# Build HTML targets: 5.html, 4.html, etc.
+HTML_TARGETS := $(PRESENTATION_NAMES:=.html)
+
+presentations: $(PDF_TARGETS) $(HTML_TARGETS)
+
+PANDOC_ARGS = -t s5 --include-in-header=./slides.css.html -V theme=serif
+
+%.pdf: presentations/%.md
+	pandoc $< -s --lua-filter=./include-md.lua --citeproc -t beamer -o presentations/$@
+
+%.html: presentations/%.md
+	pandoc $< $(PANDOC_ARGS) --lua-filter=./include-md.lua --citeproc -t revealjs -o presentations/$@
+
+present: 
+	npx serve -s presentations
+
 
 REPORT.pdf: REPORT.md src/**.md
 	pandoc $< \

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Kirill Nevzorov">
-  <title>Web Browsing using Hierarchy Visualisations</title>
+  <title>Programmer loves programming - develops too much code for a report that will never see the light of day</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -24,32 +24,43 @@
   </style>
   <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/theme/serif.css" id="theme">
   <style>
-  .slides {
+    body {
       font-size: 0.75em;
-  }
-  .reveal ul {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    h1 {
+      color: white !important;
+    }
+    .slide {
+      background-color: teal !important;
+      color: black !important;
+    }
+    .slides {
+      color: #1e1e1a !important;
+    }
+    .reveal ul {
       display: block;
-  }
-  .reveal ol {
+    }
+    .reveal ol {
       display: block;
-  }
+    }
 
-  img {
+    img {
       max-height: 350px !important;
-  }
+    }
 
-  figcaption {
+    figcaption {
       font-size: 0.6em !important;
       font-style: italic !important;
-  }
+    }
 
-  .subtitle {
+    .subtitle {
       font-style: italic !important;
-  }
+    }
 
-  .date {
+    .date {
       font-size: 0.75em !important;
-  }
+    }
   </style>
 </head>
 <body>
@@ -57,128 +68,61 @@
     <div class="slides">
 
 <section id="title-slide">
-  <h1 class="title">Web Browsing using Hierarchy Visualisations</h1>
+  <h1 class="title">Programmer loves programming - develops too much
+code for a report that will never see the light of day</h1>
   <p class="author">Kirill Nevzorov</p>
 </section>
-<section id="TOC">
-<nav role="doc-toc"> 
-<ul>
-<li><a href="#/outline-17032025">Outline 17/03/2025</a></li>
-<li><a href="#/tree-page-cli-application">Tree Page CLI Application</a>
-<ul>
-<li><a href="#/project-name">Project Name</a></li>
-<li><a href="#/terminology">Terminology</a></li>
-<li><a href="#/functionality">Functionality</a></li>
-</ul></li>
-<li><a href="#/model">Model</a>
-<ul>
-<li><a href="#/missing-features">Missing Features</a></li>
-</ul></li>
-<li><a href="#/hyperbrowser-electron-desktop-app">Hyperbrowser Electron
-Desktop App</a></li>
-<li><a href="#/graphbrowser-quarkus-backend">Graphbrowser Quarkus
-Backend</a>
-<ul>
-<li><a href="#/current-status">Current Status</a></li>
-</ul></li>
-<li><a href="#/conclusion">Conclusion</a></li>
-</ul>
-</nav>
-</section>
 
-<section id="outline-17032025" class="slide level1">
-<h1>Outline 17/03/2025</h1>
-<ul>
-<li>tree page CLI application</li>
-<li>graphbrowser quarkus backend</li>
-<li>report</li>
-</ul>
+<section id="overall-plan" class="slide level1">
+<h1>Overall Plan</h1>
+<p>I jumped on the idea of creating the project slightly before I began
+choosing a supervisor, so in my free time I started setting up the
+project and making a mental plan on what I will be able to immediately
+implement.</p>
 </section>
-<section id="tree-page-cli-application" class="slide level1">
-<h1>Tree Page CLI Application</h1>
-<aside class="notes">
-<ul>
-<li>Name of the application (treepage -&gt; pagerts)</li>
-<li>Terminology (resource or relation)</li>
-<li>Functionality of the application (query external resources)</li>
-<li>Model (json list)</li>
-<li>Missing features (statistics)</li>
-<li>Future work (pagerts -&gt; pagerrs)</li>
-</ul>
-</aside>
-<h2 id="project-name">Project Name</h2>
-<ul>
-<li>treepage -&gt; pagerts</li>
-</ul>
-<h2 id="terminology">Terminology</h2>
-<ul>
-<li>application for querying external resources</li>
-</ul>
-<div class="fragment">
-<ul>
-<li>resources?</li>
-<li>relations?</li>
-<li>valency of a node?</li>
-</ul>
-</div>
-<h2 id="functionality">Functionality</h2>
-<ul>
-<li>the application queries a website for a hierarchy of pages</li>
-<li>performs cross domain lookups</li>
-<li>returns a JSON node list of 1 page depth from starting node</li>
-</ul>
+<section id="mistake" class="slide level1">
+<h1>Mistake</h1>
+<p>I hadn’t actually read the spec top to bottom, and only later
+realised that the marking will be on the perceived feasibility of the
+project. It is infeasible to build the whole application, as I had
+started with the business idea of publishing it as a consumer-focused
+application, as it was the most viable use case.</p>
 </section>
-<section id="model" class="slide level1">
-<h1>Model</h1>
-<ul>
-<li>Is a JSON list sufficient to represent a tree structure?</li>
-</ul>
-<h2 id="missing-features">Missing Features</h2>
-<ul>
-<li><p>statistics such as:</p>
-<ul>
-<li>valency of a node</li>
-<li>number of images</li>
-<li>number of links</li>
-<li>number of words per page</li>
-</ul></li>
-</ul>
+<section id="pivoting-to-lie-theory" class="slide level1">
+<h1>Pivoting to Lie Theory</h1>
+<p>I was originally going to develop a framework for user entry. It
+would allow a developer (me) to rapidly reset and compare various
+prompts, and I had slated the aspect of “the LLM will be in a different
+configuration after every prompt run” for later to discuss and
+address.</p>
+<p>The Lie theory approach was supposed to solve this with running the
+model and instead inquiring it about its abilities, to benchmark not its
+stability as a software, but instead its performance as an aid in aiding
+the construction of a software project, plotted against the total
+collection of prompts used to produce text, counted against “resets”
+being new conversations, reboots, etc.</p>
 </section>
-<section id="hyperbrowser-electron-desktop-app" class="slide level1">
-<h1>Hyperbrowser Electron Desktop App</h1>
-<ul>
-<li>development paused</li>
-</ul>
+<section id="limitation-1" class="slide level1">
+<h1>Limitation 1</h1>
+<p>I hadn’t constructed an application or a software to produce a tally
+of the resets, which rendered this approach impossible. Instead I
+decided to attempt to write an application which instead would estimate
+the power use for the AI runner, in an attempt to produce a graphical
+readout of the <em>cost</em> of running such an AI in an office or a
+home setting. The intent would be to make the benefits of AI coding
+measurable for future applications, scientific or business-adjacent.</p>
 </section>
-<section id="graphbrowser-quarkus-backend" class="slide level1">
-<h1>Graphbrowser Quarkus Backend</h1>
-<aside class="notes">
-<ul>
-<li>Name of the application:
-<ul>
-<li>graphbrowser is good</li>
-</ul></li>
-<li>current status fine grained:
-<ul>
-<li>tooling issue with testing</li>
-</ul></li>
-<li>global status:
-<ul>
-<li>implementation of command line runner</li>
-</ul></li>
-</ul>
-</aside>
-<h2 id="current-status">Current Status</h2>
-<ul>
-<li>development paused due to a issue with the build system</li>
-<li>technology stack finalised</li>
-<li>tests are in progress</li>
-<li>implementation is in progress</li>
-<li>visualisation code not yet started</li>
-</ul>
-</section>
-<section id="conclusion" class="slide level1">
-<h1>Conclusion</h1>
+<section id="limitation-2" class="slide level1">
+<h1>Limitation 2</h1>
+<p>Graphing in my native ecosystem, Java, is limited to a very
+particular look and feel. While I am familiar with developing for
+it,</p>
+<p>I needed to write an application that would keep track of all the
+statistics for the project report. Which became apparent suddenly to be
+impossible, as I’d have to backtrack all my findings in utilising the
+LLM for research, and recall all of those metrics using this
+application, as my prompting style had changed during the term so
+far.</p>
 </section>
     </div>
   </div>

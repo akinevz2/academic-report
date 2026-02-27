@@ -1,0 +1,27 @@
+{
+  "name": "vscode-showhyphens",
+  "displayName": "Show Hyphens",
+  "description": "Run pdflatex and surface \"\\showhyphens\" results as editor diagnostics.",
+  "version": "0.0.1",
+  "engines": {"vscode": "^1.60.0"},
+  "activationEvents": ["onCommand:showhyphens.checkHyphenation"],
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ."
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "showhyphens.checkHyphenation",
+        "title": "Show Hyphenation"
+      }
+    ]
+  },
+  "devDependencies": {
+    "typescript": "^4.9.0",
+    "@types/node": "^18.0.0",
+    "@types/vscode": "^1.78.0",
+    "vscode": "^1.1.37"
+  }
+}

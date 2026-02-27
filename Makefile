@@ -1,26 +1,44 @@
-all: REMINDERS UPDATES
-REMINDERS: presentations report
-.PHONY: report
+all: REPORT.pdf
+.PHONY: report clean open server 
 
-REPORT: report
+clean: 
+	rm -f REPORT.pdf ./presentations/*.pdf ./presentations/*.html
 
-install:
-	sudo apt-get update
-	sudo apt-get install -y texlive-fonts-recommended texlive-xetex
+open: report
+	code REPORT.pdf
+
+report: REPORT.pdf 
+
+# Find all markdown files in presentations/
+PRESENTATIONS := $(wildcard presentations/*.md)
+# Extract just the names (1, 2, 3, 4, 5, rubymoon)
+PRESENTATION_NAMES := $(notdir $(basename $(PRESENTATIONS)))
+
+# Build PDF targets: 5.pdf, 4.pdf, etc.
+PDF_TARGETS := $(PRESENTATION_NAMES:=.pdf)
+# Build HTML targets: 5.html, 4.html, etc.
+HTML_TARGETS := $(PRESENTATION_NAMES:=.html)
+
+presentations: $(PDF_TARGETS) $(HTML_TARGETS)
+
+PANDOC_ARGS = -t s5 --include-in-header=./slides.css.html -V theme=serif
+
+%.pdf: presentations/%.md
+	pandoc $< -s --lua-filter=./include-md.lua --citeproc -t beamer -o presentations/$@
+
+%.html: presentations/%.md
+	pandoc $< $(PANDOC_ARGS) --lua-filter=./include-md.lua --citeproc -t revealjs -o presentations/$@
+
+present: 
+	npx serve -s presentations
 
 
-report: ./report/**/*.md
-	cd report && make clean report open
+MD_SRC := $(shell find src -type f -name '*.md' | sort)
 
-presentations:
-	@cd report/ && for presentation in presentations/*.md; do \
-		filename=$${presentation##*/}; \
-		pdf_name=$${filename%.md}; \
-		echo "Building $$pdf_name"; \
-		make "$$pdf_name"; done
+REPORT.pdf: src/TOC.md $(MD_SRC)
+	pandoc $< \
+		--toc -s \
+		--lua-filter=./include-md.lua \
+		--citeproc \
+		-o $@
 
-
-hz: 
-	@echo here's your hertz's formula
-	@echo "zcr_hz = sum(1 for i in range(1, len(signal)) if signal[i-1] * signal[i] < 0) * (sample_rate / (2 * (len(signal) - 1)))" > hz_formula.terse
-	@echo "cat hz_formula.terse"

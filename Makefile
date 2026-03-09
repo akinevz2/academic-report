@@ -42,3 +42,12 @@ REPORT.pdf: src/TOC.md $(MD_SRC)
 		--citeproc \
 		-o $@
 
+cw:
+	pandoc src/assignment.md -o assignment.pdf
+	code assignment.pdf
+
+code:
+	code Makefile
+
+edit:
+	code src/TOC.md

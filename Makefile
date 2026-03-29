@@ -37,7 +37,7 @@ MD_SRC := $(shell find src -type f -name '*.md' | sort)
 
 REPORT.pdf: src/TOC.md $(MD_SRC)
 	pandoc $< \
-		--toc -s \
+		-s \
 		--lua-filter=./include-md.lua \
 		--citeproc \
 		-o $@

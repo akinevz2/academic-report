@@ -25,13 +25,24 @@ header-includes: |
   \renewcommand{\headrulewidth}{0.4pt}
   \raggedbottom
 abstract: |
-  We wish to research the process of creating and use-case testing various LLM prompts, such autonomously prompting the user for additional details relevant to their project, assisting them in and not limited to: resumarising and verifying the information stored within a workspace, and generating intelligence from a notes archive, and discussing progress and completion stages. We research and employ the mechanism of configuring an LLM workstation and using it effectively.
+  This report presents the design and implementation of an LLM-powered workstation application built with a Quarkus backend and a web frontend. Structured analysis of local project artifacts through a tool-calling workflow is created in which an LLM orchestrates exploration, reading, and summarization operations. Rather than treating LLM assistance as ad hoc code generation, the project applies conventional software engineering practices, including modular architecture, explicit interfaces, validation checks, and iterative refinement. The report documents the runtime architecture for tool dispatch, alias resolution, transaction-scoped execution, and read-context persistence, with attention to safety controls such as path validation and constrained filesystem traversal. Development and evaluation were conducted in a home-lab setting using off-the-shelf models and standard engineering tooling. The findings highlight practical trade-offs between development speed, maintainability, and robustness when integrating LLMs into software engineering workflows.
 ...
 
-- [Introduction](./1/introduction.md)
-- [Foundations of LLM Systems](./2/foundations-of-llm-systems.md)
-- [Architectural Patterns and Design](./3/architectural-patterns-and-design.md)
-- [Practical Implementation Considerations](./4/practical-implementation-considerations.md)
-- [Research Findings and Analysis](./5/research-findings-and-analysis.md)
-- [Conclusion and Future Work](./6/conclusion-and-future-work.md)
-- [Appendices](./appendices/appendices.md)
+# Table of Contents
+1. [Introduction](#introduction)
+2. [Java with Quarkus - Overview](#overview)
+3. [Coding with LLMs - Background](#background)
+4. [LLM Powered Software - Software Architecture](#architecture)
+5. [Project Description](#project-description)
+6. [Project Overview](#project-overview)
+7. [Engineering at Home](#engineering-at-home)
+8. [Results and Discussion](#results-and-discussion)
+
+[#introduction](./introduction/introduction.md)
+[#overview](./overview/java-with-quarkus-overview.md)
+[#background](./background/coding-with-llms-background.md)
+[#architecture](./architecture/llm-powered-software-architecture.md)
+[#project-description](./project-description/project-description.md)
+[#project-overview](./project-overview/project-overview.md)
+[#engineering-at-home](./engineering-at-home/engineering-at-home.md)
+[#results-and-discussion](./results-and-discussion/results-and-discussion.md)

@@ -1,20 +1,73 @@
 local included_files = {}
+local path_sep = package.config:sub(1,1)
+
+local function is_absolute_path(path)
+  return path:match("^/") or path:match("^%a:[/\\]") or path:match("^\\\\")
+end
+
+local function normalize_path(path)
+  local prefix = ""
+
+  if path:match("^%a:[/\\]") then
+    prefix = path:sub(1, 2)
+    path = path:sub(3)
+  elseif path:match("^\\\\") then
+    prefix = "\\\\"
+    path = path:gsub("^\\\\", "")
+  elseif path:match("^/") then
+    prefix = path_sep
+    path = path:gsub("^/+", "")
+  end
+
+  local parts = {}
+  for part in path:gmatch("[^/\\]+") do
+    if part == ".." then
+      if #parts > 0 and parts[#parts] ~= ".." then
+        table.remove(parts)
+      elseif prefix == "" then
+        table.insert(parts, part)
+      end
+    elseif part ~= "." and part ~= "" then
+      table.insert(parts, part)
+    end
+  end
+
+  local normalized = table.concat(parts, path_sep)
+  if prefix == "\\\\" then
+    return prefix .. normalized
+  end
+  if prefix ~= "" then
+    if normalized == "" then
+      return prefix
+    end
+    if prefix == path_sep then
+      return prefix .. normalized
+    end
+    return prefix .. path_sep .. normalized
+  end
+  return normalized ~= "" and normalized or "."
+end
 
 local function get_dirname(path)
   return path:match("^(.*)[/\\]") or "."
 end
 
-local function resolve_path(base, relative)
-  if relative:match("^/") or relative:match("^%a:[/\\]") then
-    return relative  -- already absolute
+local function make_absolute(path)
+  if is_absolute_path(path) then
+    return normalize_path(path)
   end
-  local sep = package.config:sub(1,1)
-  if base:sub(-1) ~= sep then base = base .. sep end
-  return base .. relative
+  return normalize_path((os.getenv("PWD") or ".") .. path_sep .. path)
+end
+
+local function resolve_path(base, relative)
+  if is_absolute_path(relative) then
+    return normalize_path(relative)
+  end
+  return normalize_path(base .. path_sep .. relative)
 end
 
 local function include_markdown_file(source_path)
-  local full_path = source_path
+  local full_path = make_absolute(source_path)
 
   if included_files[full_path] then
     return { pandoc.Para({ pandoc.Str("Circular include prevented: " .. full_path) }) }

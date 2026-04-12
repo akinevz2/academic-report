@@ -1,19 +1,33 @@
-# Reports Template 
+# Report Template
 
-This repository contains the markdown files and scripts necessary to build academic reports using Pandoc. I have developed this workflow over the past few years at University of Sussex, and would like to distribute these files freely.
+Reusable Pandoc-based template for writing academic reports in Markdown.
 
-The intended use case is to produce documents in the pdf format easily.
+## Requirements
 
-Academic use only. Commercial use prohibited.
-Repository's home is at github.com/akinevz2/academic-report-buildscripts.
+- `pandoc`
+- A PDF engine (for example TeX Live)
+- Optional for live rebuilds: `npx` + `chokidar-cli`
 
-Please respect the author's choices.
+## Quick Start
 
-# Usage
-
+```sh
+make report
+make open
 ```
-# edit the report/REPORT.md
-cd report/ && make REPORT
-# open the report in your 
-# application of choice
-```
+
+By default, the build uses `REPORT.md` when present, otherwise `TEMPLATE.md`.
+
+## Authoring Structure
+
+- Main entry document: `REPORT.md` or `TEMPLATE.md`
+- Section files: `src/*.md`
+- Bibliography: `references.bib`
+
+The Lua filter (`include-md.lua`) expands local Markdown links to other `.md` files so you can compose reports from smaller section files.
+
+## Useful Targets
+
+- `make report`: build `REPORT.pdf`
+- `make watch-report`: rebuild automatically when markdown files change
+- `make presentations`: build Beamer PDFs from `presentations/*.md` (if present)
+- `make clean`: remove generated artifacts

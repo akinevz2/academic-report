@@ -1,0 +1,19 @@
+%%{init: {
+    'themeVariables': { 'fontSize': '24px' },
+    'themeCSS': '.actor, .messageText, .labelText { font-size: 24px !important; }'
+}}%%
+sequenceDiagram
+    participant LLM as LLM Runtime
+    participant TS as ToolService
+    participant TM as Tool Module
+    participant TD as Tool Dispatcher
+    participant OP as Tool Operation
+
+    LLM->>TS: execute(request, context)
+    TS->>TM: canHandle(toolName)?
+    TM-->>TS: true
+    TS->>TD: dispatch(toolName, args)
+    TD->>OP: execute(args)
+    OP-->>TD: result
+    TD-->>TS: result
+    TS-->>LLM: result

@@ -1,17 +1,13 @@
-# 1. Introduction {#introduction}
+# Introduction
 
-This section provides an overview of the project, its objectives, and its significance in the field of LLM-powered software development.
+In this project, I set out to build an application that interfaces directly with Large Language Models (LLMs), specifically a filesystem exploration assistant powered by locally-run models. The technical goal was paired with a personal engineering objective: to push my limits as a software developer by using LLM-powered agentic coding as a core development method rather than as a peripheral convenience.
 
-## Objectives
-- To explore the integration of LLMs in software architecture
-- To demonstrate the practical implementation of LLM-assisted development practices
-- To analyze the challenges and benefits of using LLMs in engineering workflows
+My interest in local LLMs grew from hands-on experimentation on my gaming computer, where I quickly saw their practical capability. Instead of treating that experience as a one-off experiment, I used it as the starting point for a structured software engineering project that combines application feature delivery with methodological evaluation.
 
-## Significance
-The project contributes to the growing body of research on LLM-powered development by providing a concrete example of how these technologies can be applied in real-world engineering scenarios.
+To support this work in a realistic environment, I built a local inference stack rather than relying on external hosted APIs. I installed Ollama to run a local AI server and invested in two NVIDIA RTX 3060 graphics cards, each with 12GB of VRAM, providing a combined 24GB memory budget for model execution.
 
-## TODO: Bring In From 92 Percent Report {#todo-introduction-from-92}
-- TODO: Add a concise project overview paragraph mirroring the old report's "Project Overview" framing but adapted to LLM workstation goals.
-- TODO: Add a dedicated motivation subsection explaining why LLM tool-calling was chosen over conventional implementation-only workflows.
-- TODO: Add a short "Findings and Achievements" preview subsection listing 3-5 concrete outcomes that will be evidenced later.
-- TODO: Add a "Professional Considerations" subsection covering reproducibility, responsible AI use, and evaluation constraints.
+This setup enabled me to evaluate a full dual-role workflow: LLMs as part of the application runtime, and LLMs as an active engineering assistant during design, implementation, and refinement. The report therefore examines both what was built and how this agentic development approach performed under practical constraints.
+
+- [#objectives](./objectives.md)
+- [#report-structure](./report-structure.md)
+- [#overview](./overview/overview.md)

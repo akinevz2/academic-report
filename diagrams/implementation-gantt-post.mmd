@@ -1,0 +1,19 @@
+%%{init: {
+    'themeVariables': { 'fontSize': '28px' },
+    'gantt': { 'fontSize': 28, 'sectionFontSize': 32, 'barHeight': 36 },
+    'themeCSS': '.tick text, .taskText, .sectionTitle text, .titleText { font-size: 28px !important; }'
+}}%%
+gantt
+    title Project App Timeline: Post-Checkpoint Implementation (2026)
+    dateFormat  YYYY-MM-DD
+    axisFormat  %d %b %Y
+
+    Project bootstrap                                 :milestone, i1, 2026-02-16, 1d
+    Assistant tooling and baseline tests              :i2, 2026-03-22, 2026-03-26
+    Knowledge model and context caching               :i3, 2026-03-27, 2026-03-29
+    Architecture consolidation and integration burst  :crit, i4, 2026-03-30, 2026-03-31
+    Tooling flow alignment                            :i5, 2026-03-31, 2026-04-04
+    Structural rewrite and workspace browser update   :i6, 2026-04-05, 2026-04-05
+    Runtime and telemetry improvements                :i7, 2026-04-06, 2026-04-06
+    Chat-based architecture pivot                     :i8, 2026-04-07, 2026-04-07
+    RAFT pipeline and websocket streaming             :milestone, i9, 2026-04-08, 1d

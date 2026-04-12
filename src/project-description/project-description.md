@@ -1,27 +1,8 @@
-# 5. Project Description {#project-description}
+# Project Description
 
-## Project Objectives
-This project aims to:
-- Develop a LLM-powered web application that analyzes file system contents using Meta's Llama 3.2 model
-- Demonstrate the integration of LLMs with Java-based microservices using Quarkus
-- Explore the practical implementation of LLM-assisted development practices in real-world engineering scenarios
+PDHD began as a solution to a problem in my own development workflow: I found myself having a growing set of unfinished personal software projects and no reliable way to tell which ones were most feasible to complete. The project was therefore conceived as a tool to analyse those project repositories and produce intelligent reports.
 
-## Scope {#project-description-scope}
-The project focuses on:
-- Building a web interface for file system analysis
-- Implementing LLM-driven content interpretation
-- Creating a scalable architecture for LLM integration
-- Documenting the development workflow and challenges
+The project idea arose from the need to satisfy two requirements: the work had to be innovative, and it had to remain practically grounded in systems engineering. The resulting project name, PDHD, and its expanded form, Project Discovery and Hierarchical Data, were chosen to reflect those aims by framing the system as both a discovery-oriented software tool and a structured approach to organising project knowledge. The project description therefore presents PDHD not only as an exploratory software artefact, but also as a constrained design exercise in integrating LLM-assisted reasoning with repository workflows under real development limits.
 
-## Methodology
-We employed a structured approach combining traditional software engineering practices with LLM-assisted development:
-1. Requirements analysis and system design
-2. LLM-assisted code generation for core components
-3. Integration testing and iterative refinement
-4. Documentation of the development process and outcomes
-
-## TODO: Bring In From 92 Percent Report {#todo-project-description-from-92}
-- TODO: Add a "Basic Workflow" subsection equivalent to the source report's gameplay loop, but for user-to-tool-to-output flow.
-- TODO: Add one "Highlight" subsection for the most advanced implemented feature (tool-calling architecture).
-- TODO: Add one "Performance Problem" subsection documenting the bottleneck observed in practice.
-- TODO: Add at least one figure reference or screenshot callout to support the narrative.
+- [#scope](./scope.md)
+- [#methodology](./methodology.md)

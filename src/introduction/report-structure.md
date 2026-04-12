@@ -1,0 +1,5 @@
+## Report Structure
+
+This report comprises three phases: foundational context, design planning, and outcomes. The Introduction frames motivation and the value proposition of querying project state through natural language. Background contextualises LLMs and the chosen project toolset. Project Description outlines the problem domain, functional requirements, and intended capabilities. Project Architecture describes the layered backend, frontend signal-based orchestration, persistence strategies, and planned features. Project Requirements consolidates functional and non-functional constraints.
+
+Implementation and outcome sections ground design in practice. Engineering at Home documents environmental constraints of homelab development and their implications. Implementation Timeline provides a Gantt overview of planned development phases. Results and Discussion present observed outcomes, test results, and gaps between intended design and delivered artefact, assessing what was proven and what remains constrained by packaging limitations or incomplete features.

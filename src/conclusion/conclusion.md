@@ -1,0 +1,3 @@
+# Conclusion
+
+This project has, in an unexpected sense, clarified for me why the field is named what it is: Artificial Intelligence. To be considered intelligent, in the fullest sense, seems to require an entity to possess personality - personality being the very trait from which we recognise and describe intelligence at all. Artificial systems carry no obligation to possess such a quality; the word _artificial_ signals precisely that nothing organic is assumed. And yet, working closely with the AI models throughout this project has demonstrated that it is genuinely possible to construct intelligence - not as a replica of human thought, but as something coherent, purposeful, and recognisably its own.

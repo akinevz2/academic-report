@@ -1,5 +1,5 @@
-all: REPORT.pdf
-.PHONY: report clean open server 
+all: watch-report
+.PHONY: report clean open server watch-report mermaid-diagrams
 
 clean: 
 	rm -f REPORT.pdf ./presentations/*.pdf ./presentations/*.html
@@ -35,9 +35,20 @@ present:
 
 MD_SRC := $(shell find src -type f -name '*.md' | sort)
 
-REPORT.pdf: src/TOC.md $(MD_SRC)
+MERMAID_SRC := $(wildcard diagrams/*.mmd)
+MERMAID_OUT := $(patsubst diagrams/%.mmd,images/%.png,$(MERMAID_SRC))
+
+mermaid-diagrams: $(MERMAID_OUT)
+
+images/%.png: diagrams/%.mmd mermaid.puppeteer.json
+	@mkdir -p images
+	npx --yes @mermaid-js/mermaid-cli -i $< -o $@ -p mermaid.puppeteer.json -w 2200 -H 1200 -s 2
+
+REPORT.pdf: src/TOC.md $(MD_SRC) mermaid-diagrams
 	pandoc $< \
 		-s \
+		--toc \
+		--number-sections \
 		--lua-filter=./include-md.lua \
 		--citeproc \
 		-o $@
@@ -51,3 +62,10 @@ code:
 
 edit:
 	code src/TOC.md
+
+watch-report: report
+	@echo "Watching markdown files with npx chokidar-cli (Ctrl+C to stop)..."
+	@npx --yes chokidar-cli "**/*.md" \
+		-i "**/.git/**" \
+		-i "**/node_modules/**" \
+		-c "$(MAKE) --no-print-directory report"

@@ -1,12 +1,18 @@
 # Introduction
 
-In this project, I set out to build an application that interfaces directly with Large Language Models (LLMs), specifically a filesystem exploration assistant powered by locally-run models. The technical goal was paired with a personal engineering objective: to push my limits as a software developer by using LLM-powered agentic coding as a core development method rather than as a peripheral convenience.
+This report investigates how locally hosted Large Language Models (LLMs) can be integrated into a software system for project inspection and repository analysis under practical engineering constraints. The implemented artefact, PDHD (Project Discovery and Hierarchical Data), combines a Quarkus backend, a web frontend, and tool-mediated interaction with local models to support filesystem exploration, file analysis, and project-level summarisation.
 
-My interest in local LLMs grew from hands-on experimentation on my gaming computer, where I quickly saw their practical capability. Instead of treating that experience as a one-off experiment, I used it as the starting point for a structured software engineering project that combines application feature delivery with methodological evaluation.
+The work addresses two linked concerns. First, can a locally deployed LLM-assisted architecture produce useful, evidence-grounded project summaries without relying on hosted APIs? Second, how effective is agentic coding as a development workflow when measured against conventional software engineering concerns such as maintainability, validation effort, and operational reliability?
 
-To support this work in a realistic environment, I built a local inference stack rather than relying on external hosted APIs. I installed Ollama to run a local AI server and invested in two NVIDIA RTX 3060 graphics cards, each with 12GB of VRAM, providing a combined 24GB memory budget for model execution.
+To evaluate these questions in a realistic setting, the system was built around local inference. Ollama was used as the model runtime, with two NVIDIA RTX 3060 GPUs (24GB combined VRAM) defining the practical resource envelope for model selection and execution.
 
-This setup enabled me to evaluate a full dual-role workflow: LLMs as part of the application runtime, and LLMs as an active engineering assistant during design, implementation, and refinement. The report therefore examines both what was built and how this agentic development approach performed under practical constraints.
+The report therefore treats LLMs in a dual role: as runtime components inside the application, and as development assistants during design and implementation. Rather than presenting only implementation progress, the report aims to evaluate the architecture and workflow against explicit objectives, constraints, and evidence.
+
+## Research Questions
+
+1. To what extent can a local LLM-assisted system generate grounded and practically useful project-inspection outputs?
+2. Which architectural decisions most strongly affect reliability and maintainability in tool-calling LLM workflows?
+3. What benefits and limitations emerge when agentic coding is used as a primary development method?
 
 - [#objectives](./objectives.md)
 - [#report-structure](./report-structure.md)

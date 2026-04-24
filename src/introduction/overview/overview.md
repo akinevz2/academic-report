@@ -21,7 +21,7 @@ VS Code Copilot also integrated effectively as inline autocomplete. Useful sugge
 
 ## Findings and Achievements
 
-This project pursued higher-order workflow capabilities through a specification-as-documentation approach rather than isolated endpoint implementations. These included a menu-driven interaction model for assistant sessions, modular tool orchestration across exploration, reading, writing, introspection, and persistent project knowledge, and Retrieval-Augmented Generation with reproducible results.
+This project pursued higher-order workflow capabilities through a specification-as-documentation approach rather than isolated endpoint implementations. The implementation applied functional programming principles, test-driven development practices, and Git-based Agile workflows to realise menu-driven interaction models, modular tool orchestration across exploration, reading, writing, introspection, and persistent project knowledge management, alongside Retrieval-Augmented Generation with reproducible results.
 
 The application stack supports practical reliability and governance features, including transactional execution boundaries, explicit error pathways, telemetry-backed observability, and compatibility handling for evolving tool interfaces.
 

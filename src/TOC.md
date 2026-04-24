@@ -33,9 +33,11 @@ header-includes: |
   \renewcommand{\headrulewidth}{0.4pt}
   \raggedbottom
 abstract: |
-  This report presents the design and implementation of an LLM-powered developer assistant built with a Quarkus backend and a web frontend. The central value of the system lies in its workflow: enabling a developer to query project history, explore repository state, and interrogate git artefacts through a natural-language interface rather than through manual inspection of command output. Beyond workflow convenience, the project demonstrates that structuring project knowledge as hierarchically organised package-level data improves modularity and maintainability, making it easier to isolate responsibilities, evolve components incrementally, and reason about the implementation impact of new features across the codebase.
+  This report presents the design and implementation of an LLM-powered developer assistant built with a Quarkus backend and a web frontend, and evaluates it through an agentic model analysis lens. The central value of the system lies in its workflow: enabling a developer to query project history, explore repository state, and interrogate git artefacts through a natural-language interface rather than through manual inspection of command output. Beyond workflow convenience, the project demonstrates that structuring project knowledge as hierarchically organised package-level data improves modularity and maintainability, making it easier to isolate responsibilities, evolve components incrementally, and reason about the implementation impact of new features across the codebase.
 
-  The implementation applies conventional software engineering practices, including CDI-managed dispatch, transaction-scoped persistence, and iterative refinement through staged development and testing. The final build represents a partial realisation of the intended system: Quarkus build-time CDI compilation introduced packaging-stage regressions, and the toolset remained constrained to a minimal working subset. The report therefore presents both the practical strength of the workflow and architecture-level design choices, and an honest account of the remaining gap between the intended design and the delivered artefact.
+  The implementation applies conventional software engineering practices, including CDI-managed dispatch, transaction-scoped persistence, and iterative refinement through staged development and testing. Findings are interpreted as constrained engineering evidence, with emphasis on reliability, orchestration behavior, and failure patterns rather than universal benchmark claims.
+
+  Determining the scope of the project depended on model selection, and model selection was itself constrained by which capabilities could realistically be implemented given resources and hardware available at each stage of development. The toolset was therefore scoped iteratively: features were admitted or deferred based on whether the chosen model — fixed at `gemma4:latest` with a 128 k-token context window — could exercise them reliably within the benchmark timeout budget (see `docs/evaluation/environment-spec.md` and `docs/evaluation/benchmark-scenarios.md`). During the final implementation sprint, newer and more capable yet more compact models became available — including `devstral:latest`, `gemma4:e4b`, and `gpt-oss:20b` — whose reduced memory footprint would have permitted more aggressive parallelism and a broader default toolset. The arrival of these models mid-sprint is noted as a changing constraint that influenced what was practical to demonstrate within the submission window; the implications for future work are discussed in the conclusion. The final build represents a partial realisation of the intended system: Quarkus build-time CDI compilation introduced packaging-stage regressions, and the toolset remained constrained to a working subset reflecting both framework limitations and the model landscape at the time of implementation. The report therefore presents both the practical strength of bounded agentic workflows and an honest account of the remaining gap between intended design and delivered artefact.
 ...
 
 \pagebreak{}
@@ -43,7 +45,9 @@ abstract: |
 [#introduction](./introduction/introduction.md)
 [#background](./background/background.md)
 [#project-description](./project-description/project-description.md)
+[#project-requirements](./project-requirements/requirements.md)
 [#project-architecture](./project-architecture/project-architecture.md)
+[#requirements-gathering](./requirements-gathering/requirements-gathering.md)
 [#implementation-gantt](./implementation-gantt.md)
 [#results-and-discussion](./results-and-discussion/results-and-discussion.md)
 [#conclusion](./conclusion/conclusion.md)

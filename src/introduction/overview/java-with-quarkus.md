@@ -8,19 +8,6 @@ During development I explored different higher-level usability goals, including 
 
 ### Key Libraries
 
-- **Quarkus REST** (`quarkus-rest`): for building API endpoints.
-- **SmallRye Config**: for runtime configuration.
-- **Panache ORM** (`quarkus-hibernate-orm-panache`): for persistence-layer development.
-- **LangChain4j** (`quarkus-langchain4j-ollama`, `langchain4j-ollama`, `langchain4j-http-client-jdk`): for LLM integration and orchestration.
-- **Picocli** (`quarkus-picocli`): for command-line interfaces.
-- **JLine**: for interactive terminal behavior.
-- **Quarkus REST Client** (`quarkus-rest-client`): for outbound HTTP calls.
-- **Quarkus WebSockets Next** (`quarkus-websockets-next`): for websocket streaming.
-- **Quarkus REST Jackson** (`quarkus-rest-jackson`): for JSON serialization.
-- **Quarkus Micrometer** (`quarkus-micrometer`): for telemetry and metrics.
-- **Quarkus Arc** (`quarkus-arc`): for dependency injection.
-- **Quarkus Agroal + SQLite JDBC** (`quarkus-agroal`, `quarkus-jdbc-sqlite`): for database connectivity and persistence.
-- **Quarkus Quinoa** (`quarkus-quinoa`): for frontend build integration.
-- **Testing stack** (`quarkus-junit`, `maven-surefire-plugin`, `maven-failsafe-plugin`): for unit and integration tests.
+The implementation stack is built on Quarkus extensions and complementary libraries. The following summarises the core runtime dependencies:
 
-These libraries formed a practical foundation for turning planned capabilities into working features.
+This produces the complete hierarchical view of transitive dependencies, pinned versions, and any convergence warnings. These libraries formed a practical foundation for implementing the planned capabilities within the Quarkus runtime model.

@@ -833,6 +833,8 @@ Support custom embedding models:
 - Optimize for domain-specific information retrieval
 - Store project-scoped embedding models
 
+An agent-only training system could be constructed on top of the existing project-summary, embedding, and retrieval pipeline. However, that capability is outside the scope of the present project, which currently focuses on inspection, persistence, retrieval, and evidence-grounded inference over externally provided models.
+
 ## References
 
 - [Chat Service](chat-service.md) - How embeddings integrate with chat flow

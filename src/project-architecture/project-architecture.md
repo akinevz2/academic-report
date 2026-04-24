@@ -4,6 +4,8 @@ This chapter outlines the software architecture of the LLM-assisted file system 
 
 ## Application Structure
 
+- [#understanding-large-language-models](./understanding-large-language-models.md)
+
 The implementation uses a layered architecture with clear boundaries between entry points, interaction flow, service logic, and tool execution. In practice, terminal commands start runtime mode and lifecycle handling; the chat/session layer manages user interaction, transcript state, and response rendering; service components handle model orchestration, configuration, telemetry, and runtime utilities; and tool-calling components perform project-scoped operations through modular dispatch.
 
 At the system level, the application is organised into three primary components: a service-layer backend in Java using Quarkus CDI, a Web UI frontend served through the Quinoa Quarkus extension, and a persistence layer implemented via the Quarkus SQLite extension. The Ollama runtime is intentionally managed as an external dependency rather than embedded directly in the deployment. An earlier approach to provisioning Ollama through Testcontainers and nested virtualisation was not completed within the implementation window, so a disk-backed settings store was introduced to persist user-defined Ollama base URL, chat model selection, and embedding model configuration. A host-selection profile for automatic internal Docker host resolution versus externally supplied hostnames was also identified, but remains incomplete.
@@ -90,7 +92,3 @@ Persistence will be implemented through Hibernate with Panache over a SQLite bac
 A Retrieval-Augmented Generation (RAG) workflow will be explored through both LangChain4j EasyRAG and a custom AI service path that loads an embedding model, generates query embeddings, and retrieves graph-linked metadata from the `ProjectKnowledge` table.
 
 - [#system-integration](./system-integration.md)
-
-## AI/LLM Powered Software
-
-- [#llm-powered-software](./llm-powered-software.md)

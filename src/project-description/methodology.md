@@ -28,15 +28,9 @@ The project follows a design-and-evaluation methodology tailored to a practical 
 
 ### Agentic Evaluation Protocol
 
-To make agentic claims auditable, evaluation is organised into explicit scenario classes that reflect the implemented workflow.
+> Following Phase 4's goal of evaluating outcomes against objective strands, this section previously defined an evaluation protocol oriented around the implemented workflow — listing four scenario classes (single-step retrieval, multi-step orchestration, error recovery, runtime fallback) and a data collection approach; the framing conflated evaluation of the coding workflow used to build PDHD with evaluation of the PDHD agent itself, and did not clearly target the PDHD agent's tool-calling capabilities as the subject under evaluation.
 
-#### Scenario Classes
-
-1. Single-step retrieval: one bounded tool call (for example, directory listing or file read) followed by model response synthesis.
-2. Multi-step orchestration: chained calls in which the model must maintain task intent across tool outputs.
-3. Error recovery: cases where tool or transport failure occurs and the system must recover without misleading output.
-4. Runtime fallback behavior: cases where model/runtime configuration changes or partial availability affect completion behavior.
-
+<!--
 #### Core Metrics
 
 The following metrics have been identified in a mindmap as of note and will be later reviewed across all scenario classes:
@@ -54,11 +48,14 @@ The following metrics have been identified in a mindmap as of note and will be l
   - _Timeout risk_: 60s+ responses (approaching timeout boundary)
 - **Cross-host latency**: comparison of the same model's latency across different hardware configurations (24GB vs 16GB VRAM machines)
 - **Accuracy heatmap by host**: per-host success rate breakdown to isolate resource-driven performance variation
+-->
 
 #### Data Collection and Interpretation
 
 Evidence is assembled from test artefacts, integration logs, and implementation records, then interpreted as a constrained engineering case study rather than a universal benchmark. Where full quantitative coverage is unavailable, claims are explicitly bounded and supported by traceable qualitative evidence.
 
+<!--
 ### Evaluation Perspective
 
 The evaluation in this report is a constrained engineering case study rather than a controlled comparative experiment. Findings are interpreted as project-specific evidence about what worked, what failed, and which design choices appear robust under the implemented conditions.
+-->

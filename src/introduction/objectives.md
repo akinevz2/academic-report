@@ -4,9 +4,7 @@ The project objectives are organised into two strands: technical delivery and wo
 
 ### Strand A: Technical Delivery
 
-1. Deliver a deployable web-based system for repository inspection and summarisation using local LLM inference.
-2. Implement tool-calling support for bounded project operations (for example file reading and directory inspection).
-3. Provide persistent project knowledge so analysis can be revisited and updated.
+> Under the two-strand structure established in the opening of §1.2, Strand A previously listed three technical deliverables — a deployable web-based system for repository inspection, bounded tool-calling support for file and directory operations, and persistent project knowledge; the framing was oriented toward demonstrating a working system rather than toward the collection of benchmarks and capability verification against a defined set of Agentic interface operations that now constitutes the strand's primary goal.
 
 ### Strand B: Workflow Evaluation
 

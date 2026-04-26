@@ -1,7 +1,8 @@
 # Project Requirements
 
-This chapter defines the functional and non-functional requirements of the PDHD system, along with the development constraints that shaped what was implementable within the project timeframe. The chapter is structured as follows: the capability contract (the full spec-defined surface), the functional and non-functional requirements that govern how those capabilities operate, the hardware benchmarking methodology, and the deferred requirements that were scoped out of the implementation window.
+<!--This chapter defines the functional and non-functional requirements of the PDHD system, along with the development constraints that shaped what was implementable within the project timeframe. The chapter is structured as follows: the capability contract (the full spec-defined surface), the functional and non-functional requirements that govern how those capabilities operate, the hardware benchmarking methodology, and the deferred requirements that were scoped out of the implementation window.-->
 
+<!--
 ## Capability Contract
 
 The system's functionality is formally specified in `docs/spec/`, a folder containing prompt-driven specifications for each tool capability. The convention is that the title heading of every spec is a first-class prompt the system must satisfy — if the system cannot do so, the gap is a defect, not an omission.
@@ -36,6 +37,7 @@ These principles govern how capabilities interact and must be respected by every
 3. **Absolute paths everywhere** — all path-handling capabilities resolve, normalise, and return absolute paths.
 4. **Idempotent reads** — read, browse, summarise, and search operations must not mutate filesystem state.
 5. **Minimal footprint writes** — write, move, archive, and knowledge-cache operations must write only to the location explicitly supplied. Implicit side-writes are prohibited unless documented.
+-->
 
 ## Functional Requirements
 
@@ -51,13 +53,7 @@ These principles govern how capabilities interact and must be respected by every
 
 ### Hardware Constraints and Multi-Host Benchmarking
 
-**Requirement**: The system must be evaluated across hardware configurations that represent a meaningful gradient of the available resource space — at minimum, a 24GB workstation and a 16GB workstation — so that VRAM pressure can be observed as an independent variable.
-
-**Rationale**: VRAM is the limiting factor that governs model capacity, and therefore tool-call reliability. A single-machine evaluation cannot distinguish model limitations from hardware limitations. Evaluating across machines controls for this confounder.
-
-**Implementation**: The benchmarking infrastructure supports multi-host evaluation: the same test suite runs against `http://ws-cvn:11434` (24GB VRAM machine) and `http://sandwich:11434` (16GB VRAM machine). Each run logs the host machine's hostname and system VRAM metrics so that model performance can be correlated with available resources. The instrumentation adds these fields to the benchmark output pipeline, enabling per-host analysis of accuracy and latency.
-
-**Status**: Met. The benchmark harness runs on both hosts and captures VRAM and hostname metadata for correlation analysis.
+> Building on §5.2.1's finding that model selection was itself a hard requirement constrained by available VRAM, this section previously argued that a single-machine evaluation could not isolate model limitations from hardware limitations, and therefore required multi-host benchmarking across a 24GB and a 16GB VRAM workstation; it described the benchmark harness as already instrumented to capture per-host VRAM and hostname metadata, and marked the requirement as met — a claim that depended on a stable benchmark suite that was not yet finalised at the time of writing.
 
 ### Model Runtime Requirements
 
@@ -131,6 +127,7 @@ The boundary between "what the spec allows" and "what the agent implements" was 
 
 **Status**: Met. Explicit constraints were documented and the generator was steered through iterative re-specification rather than through autonomous completion of the entire codebase. The capability spec folder (`docs/spec/`) and its conversion to Java integration tests is itself a boundary-management mechanism: the specs are the contract the generator must honour, and the tests are the verification that it did.
 
+<!--
 ## Deferred Requirements
 
 The following requirements were scoped out of the implementation window:
@@ -138,3 +135,4 @@ The following requirements were scoped out of the implementation window:
 - **DR-1: Multi-provider interface** — the added complexity exceeds the available time on top of other priorities
 - **DR-2: Automated project completion estimation** — the system can document scope but does not infer completion percentages or maturity scores
 - **DR-3: Embedded model for local semantic indexing** — the semantic search capability requires a separate embedding model pipeline that was not implemented
+-->

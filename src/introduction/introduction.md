@@ -10,9 +10,7 @@ The report therefore treats LLMs in a dual role: as runtime components inside th
 
 ## Research Questions
 
-1. To what extent can a local LLM-assisted system generate grounded and practically useful project-inspection outputs?
-2. Which architectural decisions most strongly affect reliability and maintainability in tool-calling LLM workflows?
-3. What benefits and limitations emerge when agentic coding is used as a primary development method?
+> Following the framing of LLMs in a dual role as both runtime component and development assistant, this section previously posed three research questions covering the practical utility of local LLM-assisted project inspection without hosted APIs, the architectural drivers of reliability in tool-calling workflows, and the tradeoffs of agentic coding as a primary development method; the questions as written reflected the original dual-scope rather than the final report's primary focus on benchmarking the PDHD agent's capabilities against a defined set of tool-callable operations.
 
 - [#objectives](./objectives.md)
 - [#report-structure](./report-structure.md)

@@ -1,3 +1,4 @@
+<!--
 # Requirements Gathering: AI/LLM Integration (Draft)
 
 ## Introduction
@@ -25,3 +26,4 @@ It is imperative to keep in mind that the real-world performance of LLM-powered 
 These points acknowledge the emergent complexity of modern LLM deployment and will require the synthesis of findings from the core benchmark results and the system architecture itself.
 
 See [#resource-requirements].
+-->

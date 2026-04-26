@@ -52,11 +52,31 @@ The following metrics define the substantial evaluation package for agentic anal
 
 ## Discussion
 
-> Building on the key findings around dispatch reliability and build-stage regressions, this section previously catalogued three concrete integration failures — a CDI injection failure under picocli, a jline terminal incompatibility under Quarkus dev mode, and a Docker/WSL networking issue affecting Ollama endpoint resolution — framing them as evidence that failures originated in infrastructure and runtime configuration rather than model quality; it did not address code stability as a recurring systemic cause of development disruption.
+Rewrite checklist:
+
+- [ ] Open by linking directly to the Key Findings section immediately above.
+- [ ] Reframe incidents as a coherent code-stability pattern across lifecycle stages (build, runtime, integration).
+- [ ] Explain causal impact on delivery, reliability, and evaluation confidence.
+- [ ] Separate observed evidence from interpretation.
+- [ ] Close with implications that feed into §9.6 and §9.9.
+
+Kind supervisor note:
+
+> You have strong raw evidence here. Group it by stability failure mode, and your discussion will read as a deliberate analysis rather than a list of isolated problems.
 
 ## Limitations
 
-> Following the specific failure incidents documented in the preceding Discussion section, this section previously described limitations in terms of development pace, Quarkus live-reload instability, and the architectural mitigation of centralising frontend dispatch to cope with frequent backend routing changes; it did not address the runtime cost of benchmark execution as a constraint competing directly with development throughput on shared hardware.
+Rewrite checklist:
+
+- [ ] Start from the discussion findings directly above.
+- [ ] Explicitly quantify or classify benchmark runtime cost as a shared-resource constraint.
+- [ ] Explain how benchmark load competed with implementation/debug cycles on the same machine.
+- [ ] Distinguish technical limitations from process limitations.
+- [ ] Bound claims clearly: what these limitations prevent you from concluding today.
+
+Kind supervisor note:
+
+> Be transparent and specific in this section. Clear limitations do not weaken your report; they show mature engineering judgment and strengthen the credibility of your conclusions.
 
 ## Threats to Validity
 

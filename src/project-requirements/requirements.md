@@ -53,7 +53,17 @@ These principles govern how capabilities interact and must be respected by every
 
 ### Hardware Constraints and Multi-Host Benchmarking
 
-> Building on §5.2.1's finding that model selection was itself a hard requirement constrained by available VRAM, this section previously argued that a single-machine evaluation could not isolate model limitations from hardware limitations, and therefore required multi-host benchmarking across a 24GB and a 16GB VRAM workstation; it described the benchmark harness as already instrumented to capture per-host VRAM and hostname metadata, and marked the requirement as met — a claim that depended on a stable benchmark suite that was not yet finalised at the time of writing.
+Rewrite checklist:
+
+- [ ] Keep the Requirement, Rationale, Implementation, and Status structure used in neighboring sections.
+- [ ] Link directly back to §5.2.1 model-selection constraints and forward to measurable outputs in §9.
+- [ ] State host setup precisely (24GB and 16GB) without overclaiming benchmark completeness.
+- [ ] Distinguish implemented instrumentation from completed evaluation results.
+- [ ] Mark status conservatively if runs are still in progress.
+
+Kind supervisor note:
+
+> Your technical setup is credible; now write this section with careful claim discipline. Be explicit about what is instrumented, what is executed, and what is still pending analysis.
 
 ### Model Runtime Requirements
 

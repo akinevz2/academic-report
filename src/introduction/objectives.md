@@ -4,7 +4,17 @@ The project objectives are organised into two strands: technical delivery and wo
 
 ### Strand A: Technical Delivery
 
-> Under the two-strand structure established in the opening of §1.2, Strand A previously listed three technical deliverables — a deployable web-based system for repository inspection, bounded tool-calling support for file and directory operations, and persistent project knowledge; the framing was oriented toward demonstrating a working system rather than toward the collection of benchmarks and capability verification against a defined set of Agentic interface operations that now constitutes the strand's primary goal.
+Rewrite checklist:
+
+- [ ] Reframe Strand A around benchmarkable capabilities rather than implementation deliverables.
+- [ ] Define capability groups that match the functional sections in §5 and evidence in §9.
+- [ ] State that the final report goal is a benchmark collection under one Agentic capability umbrella.
+- [ ] Keep objectives testable and measurable, not aspirational.
+- [ ] Preserve consistency with Strand B wording and scope.
+
+Kind supervisor note:
+
+> You already have a solid objective structure. Shift Strand A from "what was built" to "what must be proven" and the whole chapter will read as much more academically rigorous.
 
 ### Strand B: Workflow Evaluation
 

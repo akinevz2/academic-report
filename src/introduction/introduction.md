@@ -10,7 +10,17 @@ The report therefore treats LLMs in a dual role: as runtime components inside th
 
 ## Research Questions
 
-> Following the framing of LLMs in a dual role as both runtime component and development assistant, this section previously posed three research questions covering the practical utility of local LLM-assisted project inspection without hosted APIs, the architectural drivers of reliability in tool-calling workflows, and the tradeoffs of agentic coding as a primary development method; the questions as written reflected the original dual-scope rather than the final report's primary focus on benchmarking the PDHD agent's capabilities against a defined set of tool-callable operations.
+Rewrite checklist:
+
+- [ ] Keep exactly 3 research questions.
+- [ ] Tie question 1 to benchmarking PDHD agent capability outcomes under local constraints introduced above.
+- [ ] Tie question 2 to reliability/maintainability drivers that can be measured in later sections.
+- [ ] Tie question 3 to bounded workflow value without centering developer productivity claims.
+- [ ] Ensure each question can be answered using evidence from §9 and the appendices.
+
+Kind supervisor note:
+
+> Your framing paragraphs are strong. Keep the same clarity, but now make each question precise enough that a reader can see exactly where in the report the answer will come from.
 
 - [#objectives](./objectives.md)
 - [#report-structure](./report-structure.md)

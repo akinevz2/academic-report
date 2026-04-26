@@ -28,7 +28,17 @@ The project follows a design-and-evaluation methodology tailored to a practical 
 
 ### Agentic Evaluation Protocol
 
-> Following Phase 4's goal of evaluating outcomes against objective strands, this section previously defined an evaluation protocol oriented around the implemented workflow — listing four scenario classes (single-step retrieval, multi-step orchestration, error recovery, runtime fallback) and a data collection approach; the framing conflated evaluation of the coding workflow used to build PDHD with evaluation of the PDHD agent itself, and did not clearly target the PDHD agent's tool-calling capabilities as the subject under evaluation.
+Rewrite checklist:
+
+- [ ] Define the PDHD agent as the sole target under evaluation.
+- [ ] State protocol scope in terms of PDHD runtime behavior, not coding-agent development workflow.
+- [ ] Keep scenario classes aligned with the method phases above and data collection subsection below.
+- [ ] Describe success/failure criteria that can be evidenced in §9.
+- [ ] Use wording that supports reproducibility (inputs, process, outputs).
+
+Kind supervisor note:
+
+> This is a key credibility section. If you keep the subject of evaluation unambiguous from the first sentence, the rest of your argument becomes much easier to defend.
 
 <!--
 #### Core Metrics

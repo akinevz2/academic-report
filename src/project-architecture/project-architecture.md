@@ -10,20 +10,6 @@ The implementation uses a layered architecture with clear boundaries between ent
 
 At the system level, the application is organised into three primary components: a service-layer backend in Java using Quarkus CDI, a Web UI frontend served through the Quinoa Quarkus extension, and a persistence layer implemented via the Quarkus SQLite extension. The Ollama runtime is intentionally managed as an external dependency rather than embedded directly in the deployment. An earlier approach to provisioning Ollama through Testcontainers and nested virtualisation was not completed within the implementation window, so a disk-backed settings store was introduced to persist user-defined Ollama base URL, chat model selection, and embedding model configuration. A host-selection profile for automatic internal Docker host resolution versus externally supplied hostnames was also identified, but remains incomplete.
 
-## End-to-End Runtime Flow
-
-Source code layers have defined boundaries, which keep execution tracing and fault isolation straightforward.
-From startup to response delivery, the architecture follows a deterministic flow:
-
-1. The application boots and initializes core runtime dependencies.
-2. A user request enters through CLI or Web UI pathways.
-3. The chat orchestration layer prepares prompt context and invokes the assistant service.
-4. Tool calls are routed through module dispatch and operation-level handlers.
-5. Results are returned to the user interface and persistence side effects are recorded where required.
-6. Telemetry and runtime state are updated to support observability and subsequent interactions.
-7. Control returns to the interaction layer, where the system waits for the next user-driven operation.
-8. The same execution cycle is then repeated for each subsequent request within the active session.
-
 ## Package Map
 
 | Package                          | Responsibility                                                       |
@@ -39,6 +25,20 @@ From startup to response delivery, the architecture follows a deterministic flow
 | `ac.uk.sussex.kn253.tools`       | Contains assistant-invoked tool implementations                      |
 | `ac.uk.sussex.kn253.events`      | Defines event records that support decoupled inter-component signals |
 | `ac.uk.sussex.kn253.websocket`   | Handles WebSocket messaging for real-time assistant communication    |
+
+## End-to-End Runtime Flow
+
+Source code layers have defined boundaries, which keep execution tracing and fault isolation straightforward.
+From startup to response delivery, the architecture follows a deterministic flow:
+
+1. The application boots and initializes core runtime dependencies.
+2. A user request enters through CLI or Web UI pathways.
+3. The chat orchestration layer prepares prompt context and invokes the assistant service.
+4. Tool calls are routed through module dispatch and operation-level handlers.
+5. Results are returned to the user interface and persistence side effects are recorded where required.
+6. Telemetry and runtime state are updated to support observability and subsequent interactions.
+7. Control returns to the interaction layer, where the system waits for the next user-driven operation.
+8. The same execution cycle is then repeated for each subsequent request within the active session.
 
 ### Core Components
 

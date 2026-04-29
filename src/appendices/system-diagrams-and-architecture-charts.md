@@ -6,8 +6,8 @@
 
 Execution flow summary:
 
-1. The LLM runtime sends a request to the tool service.
-2. The service iterates across available modules and selects a handler that can process the tool name.
-3. The selected module validates and parses arguments before dispatch.
-4. The dispatched operation executes and returns a string result to the service.
-5. The service returns the result to the LLM runtime.
+1. The LLM runtime emits a tool execution request (`name` + JSON `arguments`) as part of the assistant turn.
+2. The assistant runtime validates the request (registered tool name and parseable JSON arguments).
+3. The request is passed to a registry that resolves the executor by direct tool-name lookup in a dispatch map.
+4. The resolved executor invokes the concrete tool operation and returns a string result (or error string).
+5. The assistant runtime wraps the result as a tool-result message and sends it back to the model for follow-up generation.

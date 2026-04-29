@@ -1,5 +1,12 @@
 local included_files = {}
 local path_sep = package.config:sub(1,1)
+local trace_includes = os.getenv("TRACE_INCLUDE_MD")
+
+local function log_include(path)
+  if trace_includes and trace_includes ~= "" and trace_includes ~= "0" then
+    io.stderr:write("[include-md] " .. path .. "\n")
+  end
+end
 
 local function is_absolute_path(path)
   return path:match("^/") or path:match("^%a:[/\\]") or path:match("^\\\\")
@@ -73,6 +80,7 @@ local function include_markdown_file(source_path)
     return { pandoc.Para({ pandoc.Str("Circular include prevented: " .. full_path) }) }
   end
 
+  log_include(full_path)
   included_files[full_path] = true
 
   local file = io.open(full_path, "r")

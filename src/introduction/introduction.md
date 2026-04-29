@@ -10,17 +10,11 @@ The report therefore treats LLMs in a dual role: as runtime components inside th
 
 ## Research Questions
 
-Rewrite checklist:
+1. **Capability under local constraints.** What task-completion accuracy and response-latency profile does the PDHD agent achieve across bounded filesystem and project-inspection scenarios when running exclusively on local inference hardware?
 
-- [ ] Keep exactly 3 research questions.
-- [ ] Tie question 1 to benchmarking PDHD agent capability outcomes under local constraints introduced above.
-- [ ] Tie question 2 to reliability/maintainability drivers that can be measured in later sections.
-- [ ] Tie question 3 to bounded workflow value without centering developer productivity claims.
-- [ ] Ensure each question can be answered using evidence from §9 and the appendices.
+2. **Reliability and maintainability of the dispatch architecture.** How do CDI-managed tool dispatch and transaction-scoped persistence affect tool-invocation reliability, argument-validation failure rates, and the maintainability of the system over iterative development?
 
-Kind supervisor note:
-
-> Your framing paragraphs are strong. Keep the same clarity, but now make each question precise enough that a reader can see exactly where in the report the answer will come from.
+3. **Scope and value of bounded agentic workflows.** To what extent do locally constrained, tool-visible agentic workflows deliver useful outcomes when the task scope is explicitly bounded by available hardware, model capability, and toolset design?
 
 - [#objectives](./objectives.md)
 - [#report-structure](./report-structure.md)

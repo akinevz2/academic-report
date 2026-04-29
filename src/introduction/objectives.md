@@ -4,31 +4,15 @@ The project objectives are organised into two strands: technical delivery and wo
 
 ### Strand A: Technical Delivery
 
-Rewrite checklist:
+The technical objectives define what the PDHD system must be capable of demonstrating under local runtime constraints. Each objective corresponds to a capability group that is measurable through the benchmark suite (see Appendix: Benchmark Scenarios) and evidenced in §9.
 
-- [ ] Reframe Strand A around benchmarkable capabilities rather than implementation deliverables.
-- [ ] Define capability groups that match the functional sections in §5 and evidence in §9.
-- [ ] State that the final report goal is a benchmark collection under one Agentic capability umbrella.
-- [ ] Keep objectives testable and measurable, not aspirational.
-- [ ] Preserve consistency with Strand B wording and scope.
-
-Kind supervisor note:
-
-> You already have a solid objective structure. Shift Strand A from "what was built" to "what must be proven" and the whole chapter will read as much more academically rigorous.
+1. **Single-step retrieval capability.** Demonstrate reliable completion of bounded single-step tasks — working directory query, project listing, directory enumeration, and file reading — with a measurable task-completion accuracy across repeated runs.
+2. **Multi-step orchestration capability.** Demonstrate that the system can chain tool calls across a multi-step folder exploration scenario, with accuracy and failure rates reported per scenario.
+3. **Security boundary enforcement.** Demonstrate that out-of-project file access is consistently blocked by the system regardless of model or prompt, with 100% enforcement across all evaluated models.
+4. **Tool dispatch reliability.** Measure argument-validation failure rates and tool-invocation error distributions across the full model set, using runtime telemetry captured from the Quarkus backend.
 
 ### Strand B: Workflow Evaluation
 
 1. Characterise how agentic coding affected implementation speed, structure, and rework.
 2. Evaluate whether generated outputs remained aligned with developer intent and engineering constraints.
 3. Identify limitations and failure patterns that constrained reliability.
-
-### Objective-to-Evidence Mapping
-
-| Objective                            | Evidence expected in report                                         | Primary indicators                                               |
-| ------------------------------------ | ------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| Deployable local LLM-assisted system | Architecture description, integration notes, and runnable workflow  | End-to-end scenario completion under local runtime constraints   |
-| Reliable bounded tool-calling        | Tool execution examples, observed failures, and mitigation strategy | Tool-call validity, categorized failure frequency                |
-| Persistent project knowledge         | Storage design, retrieval workflow, and recall examples             | Successful retrieval and reuse across repeated analysis runs     |
-| Evaluate agentic coding process      | Development reflections tied to concrete implementation episodes    | Retry/correction burden, workflow friction patterns              |
-| Assess quality and maintainability   | Discussion of rework, simplification, and boundary enforcement      | Boundary clarity, regression profile, maintainability trade-offs |
-| Identify constraints and limitations | Explicit limitations and threats-to-validity sections               | Bounded-claim statements tied to environment and sampling limits |

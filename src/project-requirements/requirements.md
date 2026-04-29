@@ -43,9 +43,9 @@ These principles govern how capabilities interact and must be respected by every
 
 ### Model Selection and Tool-Calling Support
 
-**Requirement**: The system must operate with a locally hosted model that natively supports tool-calling, within the constraints of available hardware.
+**Requirement**: The system was required to operate with a locally hosted model that natively supported tool-calling, within the constraints of available hardware.
 
-**Rationale**: The system's core capability (automated repository inspection) depends on the model's ability to emit structured tool-call specifications. Models lacking native tool-calling support required manual parsing of model output, which introduced unreliability and eliminated the automation benefit that structured tool-calling provides.
+**Rationale**: The system's core capability (automated repository inspection) depended on the model's ability to emit structured tool-call specifications. Models lacking native tool-calling support required manual parsing of model output, which introduced unreliability and eliminated the automation benefit that structured tool-calling provides.
 
 **Implementation**: Model selection was an iterative process. Early iterations explored usage monitoring and accuracy verification approaches. The final selection used an evaluation harness measuring prompt accuracy and test-pass rate, with the model constrained to a VRAM budget that fits within a 24GB workstation configuration. The choice of a model capable of native tool-calling within this budget was itself a requirement — not an implementation detail — because without it the system could not function.
 
@@ -53,33 +53,29 @@ These principles govern how capabilities interact and must be respected by every
 
 ### Hardware Constraints and Multi-Host Benchmarking
 
-Rewrite checklist:
+**Requirement**: The benchmark evaluation was scoped to a single, fully specified hardware configuration, with any secondary-host data treated as supplementary material rather than primary evidence.
 
-- [ ] Keep the Requirement, Rationale, Implementation, and Status structure used in neighboring sections.
-- [ ] Link directly back to §5.2.1 model-selection constraints and forward to measurable outputs in §9.
-- [ ] State host setup precisely (24GB and 16GB) without overclaiming benchmark completeness.
-- [ ] Distinguish implemented instrumentation from completed evaluation results.
-- [ ] Mark status conservatively if runs are still in progress.
+**Rationale**: Two physical machines were available for inference: a primary workstation with two NVIDIA RTX 3060 GPUs (24 GB combined VRAM) and a secondary machine with a single GPU (16 GB VRAM). Cross-host comparison is desirable in principle, but the machines differ across too many uncontrolled variables — RAM speed (3200 MHz vs 3600 MHz), PCIe generation, single- vs dual-GPU topology, and the resulting differences in available model versions and context window budgets — to support controlled causal claims. Including secondary-host results in the main conclusions would imply a level of experimental control that the setup does not provide.
 
-Kind supervisor note:
+**Implementation**: All primary benchmark runs were executed on the 24 GB workstation (run `20260429_124501_ff993b17`), covering nine chat-capable Ollama models across eight scenarios with twelve repeats each. The inference host was `ws-raretower.local:11434`. Results are reported in §9 and the raw data is preserved in the benchmark SQLite database. Secondary-host data, if collected, is reserved for the appendix as a reference point only and is not used to draw conclusions.
 
-> Your technical setup is credible; now write this section with careful claim discipline. Be explicit about what is instrumented, what is executed, and what is still pending analysis.
+**Status**: Met for the primary host. The full nine-model, eight-scenario evaluation suite has been executed and results recorded. Secondary-host comparison runs are out of scope for the primary analysis.
 
 ### Model Runtime Requirements
 
-**Requirement**: The system must account for the resource constraints imposed by locally hosted inference, particularly GPU VRAM availability and context window budget.
+**Requirement**: The system was required to account for the resource constraints imposed by locally hosted inference, particularly GPU VRAM availability and context window budget.
 
-**Rationale**: VRAM availability directly governs which models can be deployed. When a model's parameter count exceeds available GPU VRAM, Ollama performs partial offloading to system RAM, causing measurable degradation in token throughput (output tokens per second) — the primary usability metric for interactive developer tooling. Additionally, context window size is shared: conversation history, tool definitions, and retrieved knowledge compete for the same fixed token allocation, forcing architectural trade-offs.
+**Rationale**: VRAM availability governed which models could be deployed. When a model's parameter count exceeded available GPU VRAM, Ollama performed partial offloading to system RAM, causing measurable degradation in token throughput (output tokens per second) — the primary usability metric for interactive developer tooling. Additionally, context window size was shared: conversation history, tool definitions, and retrieved knowledge competed for the same fixed token allocation, forcing architectural trade-offs.
 
-**Implementation**: Model selection was constrained to a 24GB VRAM budget on the primary workstation. Token throughput was identified as the key usability metric: generation rates below an interactive threshold disrupt the feedback loop required for developer tools. Context window sizing requires careful arbitration: injecting tool schemas at inference time consumes tokens, directly reducing capacity for conversation history and RAG-retrieved context. The system does not embed Ollama; it requires externally provisioned access over the network, which must be accounted for in both development and deployment environments.
+**Implementation**: Model selection was constrained to a 24GB VRAM budget on the primary workstation. Token throughput was identified as the key usability metric: generation rates below an interactive threshold disrupted the feedback loop required for developer tools. Context window sizing required careful arbitration: injecting tool schemas at inference time consumed tokens, directly reducing capacity for conversation history and RAG-retrieved context. The system did not embed Ollama; it required externally provisioned access over the network, which had to be accounted for in both development and deployment environments.
 
 **Status**: Met. The deployed model operates within the VRAM budget and maintains interactive token throughput. Context budgeting is explicitly managed in prompt construction.
 
 ### Development Environment RAM Requirements
 
-**Requirement**: The development environment must be capable of running the full toolchain — Quarkus dev server, browser and devtools, Ollama instance, IDE/editor, and all build/test tooling — simultaneously on a machine with at least 64GB of RAM.
+**Requirement**: The development environment was required to be capable of running the full toolchain — Quarkus dev server, browser and devtools, Ollama instance, IDE/editor, and all build/test tooling — simultaneously on a machine with at least 64GB of RAM.
 
-**Rationale**: This was identified as a constraint early in the project's lifecycle, before the academic work began. The development workload (Quarkus live reload, Ollama serving, browser devtools, IDE indexing, parallel build processes) consumes substantial main memory. A machine with only 32GB of RAM — while sufficient for a dedicated Ollama serving machine — is inadequate for development of this system in its entirety. This is a practical constraint on who can work on the project, not a limitation of the system itself.
+**Rationale**: This was identified as a constraint early in the project's lifecycle, before the academic work began. The development workload (Quarkus live reload, Ollama serving, browser devtools, IDE indexing, parallel build processes) consumed substantial main memory. A machine with only 32GB of RAM — while sufficient for a dedicated Ollama serving machine — is inadequate for development of this system in its entirety. This is a practical constraint on who can work on the project, not a limitation of the system itself.
 
 **Implementation**: The Ollama serving machine (32GB RAM, 3600MHz) runs Ollama dedicated. The development machine (64GB RAM, 3200MHz) runs the full development workload: Quarkus, browser, IDE, and CI tooling. The 64GB requirement was confirmed during initial development and has been necessary throughout.
 
@@ -87,9 +83,9 @@ Kind supervisor note:
 
 ### Benchmarking and Verification Framework
 
-**Requirement**: The system must provide the capability to run benchmarks — including JUnit/Quarkus integration tests, scenario-based evaluation, metric instrumentation, and repeated scenario runs — against which reliability and performance claims can be evidenced.
+**Requirement**: The system was required to provide the capability to run benchmarks — including JUnit/Quarkus integration tests, scenario-based evaluation, metric instrumentation, and repeated scenario runs — against which reliability and performance claims could be evidenced.
 
-**Rationale**: Academic validity requires measurable, repeatable evaluation. Without a benchmark framework, claims cannot be distinguished from anecdote. The benchmarks must exercise all 14 capability specs as executable test cases, not as descriptive documents alone.
+**Rationale**: Academic validity required measurable, repeatable evaluation. Without a benchmark framework, claims could not be distinguished from anecdote. The benchmarks were required to exercise all 14 capability specs as executable test cases, not as descriptive documents alone.
 
 **Implementation**: Benchmarks are implemented as Java integration tests (JUnit + Quarkus) that exercise each tool capability from the spec folder. These tests are wired to the BenchLam harness (defined in `scripts/benchlam/`) which runs them as scenario-based evaluations, collecting pass/fail rates, latency distributions, and failure-category frequency. The multi-host capability described above allows cross-hardware comparison of model performance.
 
@@ -97,9 +93,9 @@ Kind supervisor note:
 
 ### Testing and Verification
 
-**Requirement**: The system must be verified against its requirements through automated testing, including coverage of the full spec-defined capability surface and cross-model/machine comparison where relevant.
+**Requirement**: The system was verified against its requirements through automated testing, including coverage of the full spec-defined capability surface and cross-model/machine comparison where relevant.
 
-**Rationale**: Verification is a fundamental engineering requirement. Without it, functional correctness cannot be established, and evaluation claims lack foundation.
+**Rationale**: Verification was a fundamental engineering requirement. Without it, functional correctness could not be established, and evaluation claims would lack foundation.
 
 **Implementation**: The most time-consuming requirement to implement was the testing harness and verification pipeline. Many tests were partially delegated to the LLM coding agent. The multi-provider interface was explicitly deferred as out of scope — too much work to implement within the available time on top of other priorities.
 
@@ -107,9 +103,9 @@ Kind supervisor note:
 
 ### Multi-Provider Support
 
-**Requirement**: The system must support multiple LLM providers (local and remote) rather than being locked to a single backend.
+**Requirement**: The system was required to support multiple LLM providers (local and remote) rather than being locked to a single backend.
 
-**Rationale**: Vendor lock-in is a well-documented risk in LLM systems. Multi-provider support enables portability and risk mitigation.
+**Rationale**: Vendor lock-in was a well-documented risk in LLM systems. Multi-provider support would have enabled portability and risk mitigation.
 
 **Implementation**: Explicitly deferred during implementation because the added complexity would have exceeded the development time. This deferral is a deliberate scope management decision, not an oversight.
 
@@ -119,9 +115,9 @@ Kind supervisor note:
 
 ### Maintainability
 
-**Requirement**: The system must be designed to support incremental changes without cascading refactors, with clear boundaries between layers.
+**Requirement**: The system was designed to support incremental changes without cascading refactors, with clear boundaries between layers.
 
-**Rationale**: The project's value lies not only in its features but in its structure as a research artefact. Maintainability ensures that the system can be inspected, modified, and understood by others who evaluate it.
+**Rationale**: The project's value lay not only in its features but in its structure as a research artefact. Maintainability ensured that the system could be inspected, modified, and understood by others who evaluated it.
 
 **Implementation**: The architecture separates tool-dispatch from UI orchestration, and tool-dispatch from persistence. Each boundary is explicit in the package structure, making it possible to modify one layer without affecting others.
 
@@ -129,13 +125,13 @@ Kind supervisor note:
 
 ### Spec Boundary Management
 
-**Requirement**: When using an autonomous or semi-autonomous code generator, the system must include mechanisms to keep generated code within the intended architectural boundaries.
+**Requirement**: When using an autonomous or semi-autonomous code generator, the system was required to include mechanisms to keep generated code within the intended architectural boundaries.
 
-**Rationale**: This is a requirement that emerged during development. Traditional projects have static requirements — the implementation produces one-time. When using an autonomous generator, scope becomes a continuous steering problem. The generator produces coherent output (to itself) rather than coherent output (to your spec). The requirement, therefore, is not just to define the system but to continuously constrain what the generator is permitted to implement.
+**Rationale**: This is a requirement that emerged during development. Traditional projects have static requirements — the implementation produces one-time. When using an autonomous generator, scope becomes a continuous steering problem. The generator produces coherent output (to itself) rather than coherent output (to your spec). The requirement, therefore, was not just to define the system but to continuously constrain what the generator was permitted to implement.
 
-The boundary between "what the spec allows" and "what the agent implements" was the hardest constraint to define during this project. Qwen 2.5 Coder lacked the instruction-following stability to implement autonomously; GPT-5.1 (Copilot) unlocked autonomous development but required explicit style and architecture steering to prevent drift. This revealed a key insight: when using an autonomous generator, scope is no longer a static requirement but a dynamic control problem.
+The boundary between "what the spec allows" and "what the agent implements" was the hardest constraint to define during this project. Qwen 2.5 Coder lacked the instruction-following stability to implement autonomously; GPT-5.1 (Copilot) unlocked autonomous development but required explicit style and architecture steering to prevent drift. This revealed a key insight: when using an autonomous generator, scope was no longer a static requirement but a dynamic control problem.
 
-**Status**: Met. Explicit constraints were documented and the generator was steered through iterative re-specification rather than through autonomous completion of the entire codebase. The capability spec folder (`docs/spec/`) and its conversion to Java integration tests is itself a boundary-management mechanism: the specs are the contract the generator must honour, and the tests are the verification that it did.
+**Status**: Met. Explicit constraints were documented and the generator was steered through iterative re-specification rather than through autonomous completion of the entire codebase. The capability spec folder (`docs/spec/`) and its conversion to Java integration tests is itself a boundary-management mechanism: the specs were the contract the generator was required to honour, and the tests were the verification that it did.
 
 <!--
 ## Deferred Requirements

@@ -1,3 +1,6 @@
+## `generate_hardware_comparison.py`
+
+```python
 import polars as pl
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -86,3 +89,5 @@ for i, host in enumerate(hosts):
 plt.tight_layout()
 plt.savefig(output_path)
 print(f"Successfully generated: {output_path}")
+
+```

@@ -15,6 +15,8 @@ The analysis treats the system as a constrained engineering case study with four
 Results are interpreted as implementation-specific evidence, not as universal model-performance claims.
 -->
 
+[#benchmark-evaluation](./findings-and-graphs.md)
+
 ## Key Findings
 
 - Deterministic tool dispatch through module selection using library methods was broadly comparable in reliability to manually prompting the model to produce structured JSON. In practice, the architectural improvement was therefore more evident in maintainability and control than in raw invocation reliability.
@@ -52,31 +54,19 @@ The following metrics define the substantial evaluation package for agentic anal
 
 ## Discussion
 
-Rewrite checklist:
+The findings above confirm the pattern described in the Key Findings: agentic capability was most reliable when tasks were bounded to single-step tool invocations with no-argument or low-argument tools. The universal success on S08 and the universal failure on S01 and S07 reflect, respectively, a well-enforced constraint boundary and two systematic evaluation mismatches rather than tool execution failures. The high variance on S05 (multi-step exploration) is consistent with the architectural observation that multi-step orchestration reliability depends on argument construction quality, which the telemetry confirms as the dominant failure mode.
 
-- [ ] Open by linking directly to the Key Findings section immediately above.
-- [ ] Reframe incidents as a coherent code-stability pattern across lifecycle stages (build, runtime, integration).
-- [ ] Explain causal impact on delivery, reliability, and evaluation confidence.
-- [ ] Separate observed evidence from interpretation.
-- [ ] Close with implications that feed into §9.6 and §9.9.
-
-Kind supervisor note:
-
-> You have strong raw evidence here. Group it by stability failure mode, and your discussion will read as a deliberate analysis rather than a list of isolated problems.
+The code-stability issues observed throughout the development lifecycle — build-time CDI resolution failures, runtime model-switch race conditions, and end-stage tool dispatch regressions — had a measurable effect on evaluation confidence. The benchmark was run against the final packaged build rather than a controlled reference snapshot, meaning that any instability in the packaged system is reflected in the accuracy and latency measurements. The 38.54% accuracy recorded for `llama3.1:latest` against 54.17% in an earlier isolated single-model run (run `20260429_115226`) suggests that the system state at benchmark time was not fully stable for that model, and the results should be interpreted with this caveat.
 
 ## Limitations
 
-Rewrite checklist:
+The two-machine deployment introduced several environmental constraints on measurement reliability. A wired network connection between MINIFRIDGE and WS-RARETOWER was required for stable inference traffic; any link instability would have introduced spurious latency spikes indistinguishable from model or system behaviour. Power profile and hibernation timeout configuration on both workstations were also a prerequisite: an unattended sleep transition on either host during a multi-hour batch run would have corrupted the run silently. These constraints were managed in practice, but they were not formally verified before each run, and their potential influence on the observed P95 outliers cannot be fully discounted.
 
-- [ ] Start from the discussion findings directly above.
-- [ ] Explicitly quantify or classify benchmark runtime cost as a shared-resource constraint.
-- [ ] Explain how benchmark load competed with implementation/debug cycles on the same machine.
-- [ ] Distinguish technical limitations from process limitations.
-- [ ] Bound claims clearly: what these limitations prevent you from concluding today.
+A more significant process limitation was that benchmark runs were not collected during iterative development. Continuous measurement across implementation phases would have provided a longitudinal view of how system changes affected model accuracy and latency, making it possible to attribute regressions to specific commits rather than treating the final-build results as a point-in-time snapshot. The absence of this data means the Discussion section relies partly on retrospective comparison between isolated runs rather than a continuous evidence record.
 
-Kind supervisor note:
+One further uncontrolled variable was model cold-start behaviour on the Ollama host. When the benchmark script cycled to a new model, Ollama was required to load that model's weights into VRAM before the first inference request could be served. Scenarios executed immediately after a model load may therefore have recorded slightly higher latency than they would have with the model already resident and warmed in VRAM. This effect was not isolated or corrected for in the current results, and represents a small but non-zero source of latency skew across the per-model P50 and P95 figures.
 
-> Be transparent and specific in this section. Clear limitations do not weaken your report; they show mature engineering judgment and strengthen the credibility of your conclusions.
+From a process perspective, the evaluation scope is bounded by what was feasible on local hardware within the project timeline. The eight-scenario suite covers core functional categories but does not include error-recovery workflows or runtime fallback paths as distinct scenarios. The twelve-repeat design provides stable P50 estimates but limited P95 resolution; a broader repeat count would reduce the influence of individual high-latency outliers. Finally, one model (`qwen3.6:latest`) was excluded from comparative analysis due to an infrastructure failure during the run, reducing the effective comparative sample to eight models.
 
 ## Threats to Validity
 
@@ -103,6 +93,7 @@ Future research could explore:
 2. Strengthening cache invalidation and freshness policies
 3. Extending observability with per-tool latency and failure-rate metrics
 4. Evaluating alternative dispatch strategies when module overlap increases
+5. Parametrising the system prompt and user query messages with session-level meta-context — such as the current working directory, open file paths, and shallow file-level intelligence — injected at request time. The universal S01 failure (Get CWD returned 0% accuracy across all nine models) suggests that this class of information is not reliably inferred from the tool schema alone; making it explicit in the prompt would remove the inference burden entirely and is likely to improve performance on any task where ambient workspace state is a precondition for correct tool use.
 
 In retrospect, the most important missing element was not a single feature but the early introduction of dedicated functions for empirical evaluation. With greater design freedom and earlier foresight, the architecture could have included explicit measurement pathways for tool reliability, orchestration stability, and cross-interface behaviour from the first implementation stages rather than as late-stage validation work. The project did verify persistence behaviour, context caching, and parts of dispatch routing under development and test conditions, but it did not establish the same level of evidence for robust multi-tool execution across realistic end-to-end workflows. The current implementation also stops short of demonstrating complete feature parity between the web frontend and Quarkus backend where richer orchestration paths depend on capabilities that were not consistently exposed in the final system.
 

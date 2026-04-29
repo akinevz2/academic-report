@@ -28,17 +28,15 @@ The project follows a design-and-evaluation methodology tailored to a practical 
 
 ### Agentic Evaluation Protocol
 
-Rewrite checklist:
+The subject under evaluation is the PDHD agent at runtime: its ability to interpret natural-language task prompts, select and invoke the correct tools with valid arguments, and return a correct response within an acceptable latency budget. The evaluation does not assess the coding-assistant workflow used to build the system; it assesses the deployed system's behaviour under repeatable input conditions.
 
-- [ ] Define the PDHD agent as the sole target under evaluation.
-- [ ] State protocol scope in terms of PDHD runtime behavior, not coding-agent development workflow.
-- [ ] Keep scenario classes aligned with the method phases above and data collection subsection below.
-- [ ] Describe success/failure criteria that can be evidenced in §9.
-- [ ] Use wording that supports reproducibility (inputs, process, outputs).
+**Scenarios.** Eight task scenarios (S01–S08) were defined, spanning single-step retrieval (S01–S04), multi-step orchestration (S05–S06), web search integration (S07), and security boundary enforcement (S08). Full scenario definitions, including prompts, expected tool calls, and success criteria, are provided in Appendix: Benchmark Scenarios.
 
-Kind supervisor note:
+**Inputs and process.** Each scenario was submitted to the PDHD chat API as a fixed natural-language prompt with no prior context. Nine chat-capable Ollama models were evaluated. Each scenario was repeated twelve times per model to obtain stable accuracy and latency estimates. The model was switched via the PDHD runtime configuration API between model runs; no other system state was changed between repeats.
 
-> This is a key credibility section. If you keep the subject of evaluation unambiguous from the first sentence, the rest of your argument becomes much easier to defend.
+**Success and failure criteria.** A response was marked correct if it satisfied either a regex pattern match against a known-good answer or a positive verdict from an LLM-based answer evaluator. Latency was measured end-to-end from the PDHD chat API request to the final streamed token. Tool-level failure rates and argument-validation failures were captured from backend telemetry at run completion.
+
+**Outputs.** Results were written to a SQLite database and summarised as per-model accuracy percentages, mean/P50/P95 latency, HTTP error rate, and a tool-level invocation and failure breakdown. The full environment specification — hardware, model versions, runtime configuration, and timeout budget — is provided in Appendix: Evaluation Environment Specification.
 
 <!--
 #### Core Metrics

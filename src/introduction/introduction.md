@@ -4,7 +4,7 @@ This report investigates how locally hosted Large Language Models (LLMs) can be 
 
 The work addresses two linked concerns. First, can a locally deployed LLM-assisted architecture produce useful, evidence-grounded project summaries without relying on hosted APIs? Second, how effective is agentic coding as a development workflow when measured against conventional software engineering concerns such as maintainability, validation effort, and operational reliability?
 
-To evaluate these questions in a realistic setting, the system was built around local inference. Ollama was used as the model runtime, with two NVIDIA RTX 3060 GPUs (24GB combined VRAM) defining the practical resource envelope for model selection and execution.
+To evaluate these questions in a realistic setting, the system was built around local inference. Ollama was used as the model runtime, with an NVIDIA RTX 4070 (12 GB) and an NVIDIA RTX 3060 (12 GB) — 24 GB combined VRAM — defining the practical resource envelope for model selection and execution.
 
 The report therefore treats LLMs in a dual role: as runtime components inside the application, and as development assistants during design and implementation. Rather than presenting only implementation progress, the report aims to evaluate the architecture and workflow against explicit objectives, constraints, and evidence.
 

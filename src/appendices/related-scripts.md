@@ -1,4 +1,4 @@
-## Appendix: Supporting Scripts and Code Artifacts
+## Appendix: Supporting Scripts and Code Artefacts
 
 The following scripts were used to generate benchmark data, produce graphs, and support the evaluation work described in this report. Each section below contains the full literal source of the script as it existed at submission time.
 

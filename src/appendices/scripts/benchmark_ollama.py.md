@@ -80,7 +80,7 @@ def run_maven_prompt_tests():
         return False
 
 # Configuration
-DEFAULT_OLLAMA_HOST = "http://ws-raretower.local:11434"
+DEFAULT_OLLAMA_HOST = "http://host.docker.internal:11434"
 DEFAULT_PDHD_BASE_URL = "http://localhost:8080"
 OLLAMA_LIST_CMD = ["ollama", "list"]
 OLLAMA_PULL_CMD = ["ollama", "pull"]
@@ -279,7 +279,7 @@ def save_results_to_sqlite(db_path, run_id, run_started_at, run_finished_at, mav
             )
 
 def normalize_ollama_host(host):
-    """Normalizes host values like ws-raretower:11434 to http://ws-raretower:11434."""
+    """Normalizes host values like host.docker.internal:11434 to http://host.docker.internal:11434."""
     normalized = host.strip()
     if not normalized.startswith("http://") and not normalized.startswith("https://"):
         normalized = f"http://{normalized}"
@@ -856,7 +856,7 @@ def run_benchmark(
 
     resolved_judge_host = judge_host
     if not resolved_judge_host:
-        resolved_judge_host = "http://ws-raretower.local:11434" if target == "pdhd" else host
+        resolved_judge_host = "http://host.docker.internal:11434" if target == "pdhd" else host
     resolved_judge_host = normalize_ollama_host(resolved_judge_host)
 
     if not preflight_judge_models(test_cases, resolved_judge_host, judge_fallback_model=judge_fallback_model):
@@ -1050,7 +1050,7 @@ def parse_args():
     parser.add_argument(
         "--host",
         default=DEFAULT_OLLAMA_HOST,
-        help="Ollama host, e.g. http://ws-raretower:11434 or ws-raretower:11434",
+        help="Ollama host, e.g. http://host.docker.internal:11434 or host.docker.internal:11434",
     )
     parser.add_argument(
         "--pdhd-base-url",
@@ -1067,7 +1067,7 @@ def parse_args():
         default=None,
         help=(
             "Ollama host used for judge-model evaluations. "
-            "Defaults to --host in ollama mode and ws-raretower:11434 in pdhd mode."
+            "Defaults to --host in ollama mode and host.docker.internal:11434 in pdhd mode."
         ),
     )
     parser.add_argument(

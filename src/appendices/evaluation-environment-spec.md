@@ -10,13 +10,14 @@
 Run date/time (ISO-8601): 2026-04-14T00:00:00Z
 Host OS:                  Debian GNU/Linux 12 (bookworm) in dev-container
 CPU model:                Intel i7 11700k
+GPU:                      2x NVIDIA RTX 3060 12GB (24GB combined VRAM)
 RAM (GB):                 DDR4 32GB 3600MHz
 Java version:             21+
 Quarkus version:          see pom.xml
 LangChain4j version:      see pom.xml
 Model name:               gemma4
 Model variant/tag:        gemma4:latest
-Model context window:     128k (default)
+Model context window:     128k
 Model temperature:        0.5
 Ollama version:           0.22.0
 Ollama host:              ws-raretower:11434
@@ -37,12 +38,13 @@ Host OS:                  Debian GNU/Linux 12 (bookworm) in dev-container
 Backend host:             MINIFRIDGE
 Inference host:           ws-raretower.local:11434
 CPU model:                Intel i7 11700k
+GPU:                      NVIDIA RTX 4070 12GB + NVIDIA RTX 3060 12GB (24GB combined VRAM)
 RAM (GB):                 DDR4 32GB 3600MHz
 Java version:             21+
 Quarkus version:          see pom.xml
 LangChain4j version:      see pom.xml
 Model set:                9 chat-capable Ollama models (comparative run)
-Model context window:     default per model/runtime configuration
+Model context window:     32k
 Model temperature:        0.5
 Ollama version:           0.22.0
 Ollama host:              ws-raretower.local:11434

@@ -364,7 +364,7 @@ private void generateEmbedding(String text) {
 
 ### 2. Session Context Integration
 
-The `get_session_context` introspection tool remains unchanged:
+The `get_session_context` introspection tool remains STABLE:
 
 ```
 Tool: get_session_context

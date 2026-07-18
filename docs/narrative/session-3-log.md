@@ -28,7 +28,7 @@
 - Removed hardcoded `qwen2.5-coder` references from test matrices
 - Fixed `OllamaWorkstationIntegrationTest` to use `OllamaTestSupport.toolModelPreference()` instead of blindly selecting first available model
 - Added case-insensitive assertion for oneshot chat test response
-- Embedding model default (`qwen3-embedding`) remains unchanged as designed
+- Embedding model default (`qwen3-embedding`) remains STABLE as designed
 
 ### 3. Compilation Validation ✅
 

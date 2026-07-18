@@ -15,4 +15,4 @@ This checklist maps recommendation items to concrete implementation and validati
 
 - Typed contract extension is currently delivered for observability/caching metadata while preserving existing string-first tool outputs.
 - Additional benchmark/reporting automation can now build on telemetry snapshots without changing tool call behavior.
-- Existing `/api/tool-activity` remains unchanged for compatibility; new versioned contracts are additive.
+- Existing `/api/tool-activity` remains STABLE for compatibility; new versioned contracts are additive.

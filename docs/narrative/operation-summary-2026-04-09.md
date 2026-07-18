@@ -24,7 +24,7 @@ This update removes all Testcontainers auto-provisioning and model-pull logic fr
 
 On success, `pdhd.ollama.base-url` and `pdhd.ollama.bootstrap.base-url` are written as system properties. No container is started; no models are pulled; no `bootstrapOnStart` flag is involved.
 
-**Stable public entry point** (unchanged signature):
+**Stable public entry point** (STABLE signature):
 
 ```java
 public static void prepareForLaunch(final String[] args)

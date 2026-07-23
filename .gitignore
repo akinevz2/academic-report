@@ -1,4 +1,15 @@
+<<<<<<< HEAD
 REPORT.pdf
 presentations/*.pdf
 presentations/*.html
 BUILDING.log
+=======
+BUILDING.log
+!*.pdf
+
+!TEMPLATE.md
+!REPORT.*
+
+schematics/
+TODO.md
+>>>>>>> personal

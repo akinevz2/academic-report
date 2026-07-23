@@ -37,10 +37,8 @@
 			"mavenVersion": "latest",
 			"jdkDistro": "open"
 		},
-		"ghcr.io/devcontainers/features/docker-in-docker": {
-			"version": "latest",
-			"moby": false,
-			"mobyBuildxVersion": false
+		"ghcr.io/devcontainers-extra/features/apt-packages": {
+			"packages": "pandoc texlive-xetex"
 		}
 	},
 	// Features to add to the dev container. More info: https://containers.dev/features.
@@ -92,6 +90,5 @@
 	// for pushing signed commits
 	// run args wont be necessary for this container
 	// testing should be done of a remote machine
-
 	// "postStartCommand": "cd .devcontainer/ && docker compose up"
 }

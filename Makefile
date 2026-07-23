@@ -1,3 +1,26 @@
+<<<<<<< HEAD
+.PHONY: report
+all: REPORT open
+
+src/**/*.md: 
+	@echo reading $@
+
+static/report/REPORT.pdf: src/**.md
+	pandoc TEMPLATE.md static/references.bib \
+		--lua-filter=include-md.lua \
+		--citeproc \
+		--number-sections \
+		-o $@
+
+# figure out how to set type to beamer
+report: static/report/REPORT.pdf
+
+open: static/report/REPORT.pdf
+	code $<
+
+clean: 
+	rm static/report/REPORT.pdf
+=======
 all: watch-report
 .PHONY: report clean open server watch-report mermaid-diagrams report-included-docs report-included-nonascii report-build-scan script-appendices
 
@@ -144,3 +167,4 @@ watch-report: report
 		-i "**/.git/**" \
 		-i "**/node_modules/**" \
 		-c "$(MAKE) --no-print-directory report"
+>>>>>>> personal

@@ -10,6 +10,8 @@ The implementation uses a layered architecture with clear boundaries between ent
 
 At the system level, the application is organised into three primary components: a service-layer backend in Java using Quarkus CDI, a Web UI frontend served through the Quinoa Quarkus extension, and a persistence layer implemented via the Quarkus SQLite extension. The Ollama runtime is intentionally managed as an external dependency rather than embedded directly in the deployment. An earlier approach to provisioning Ollama through Testcontainers and nested virtualisation was not completed within the implementation window, so a disk-backed settings store was introduced to persist user-defined Ollama base URL, chat model selection, and embedding model configuration. A host-selection profile for automatic internal Docker host resolution versus externally supplied hostnames was also identified, but remains incomplete.
 
+\onecolumn{}
+
 ## Package Map
 
 | Package                          | Responsibility                                                       |
@@ -72,6 +74,8 @@ All of the above components are wired together through Quarkus CDI (Context Depe
 | `WorkingDirectoryService`  | Maintains project working-directory context for scoped operations          |
 | `WebUiService`             | Manages embedded Web UI initialisation and lifecycle control               |
 | `RuntimeManagementService` | Provides runtime control utilities, including shutdown handling            |
+
+\twocolumn{}
 
 ## Architectural Choices
 

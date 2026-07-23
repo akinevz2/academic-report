@@ -1,3 +1,5 @@
+\twocolumn{}
+
 # Implementation Timeline
 
 The first chart summarises the report-side timeline derived from the presentation materials and their revision history in this repository, while the second provides a more detailed view of the implementation burst derived from the project repository.

@@ -1,3 +1,5 @@
+\pagebreak{}
+
 # Conclusion
 
 This report evaluated a locally hosted, tool-calling LLM system as a constrained engineering artefact and assessed agentic coding as a practical development workflow. The central result is not that the system achieved broad autonomy, but that bounded agentic workflows can be useful when orchestration boundaries, tool contracts, and validation practices are explicit.

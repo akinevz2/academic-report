@@ -11,7 +11,7 @@ title: |
 date: \today{}
 geometry: margin=2cm
 documentclass: article
-classoption: twocolumn
+classoption: twocolumn,a4paper
 papersize: a4
 bibliography: |
   ./static/references.bib
@@ -25,6 +25,7 @@ header-includes: |
   \fancyfoot[C]{\thepage}
   \renewcommand{\headrulewidth}{0.4pt}
   \raggedbottom
+  \usepackage{ltabptch}
 abstract: |
   This report presents the design and implementation of an LLM-powered developer assistant built with a Quarkus backend and a web frontend, and evaluates it through an agentic model analysis lens. The central value of the system lies in its workflow: enabling a developer to query project history, explore repository state, and interrogate git artefacts through a natural-language interface rather than through manual inspection of command output. Beyond workflow convenience, the project demonstrates that structuring project knowledge as hierarchically organised package-level data improves modularity and maintainability, making it easier to isolate responsibilities, evolve components incrementally, and reason about the implementation impact of new features across the codebase.
 

@@ -11,7 +11,7 @@ title: |
 date: \today{}
 geometry: margin=2cm
 documentclass: article
-classoption: twocolumn,a4paper
+classoption: twocolumn, a4paper
 papersize: a4
 bibliography: |
   ./static/references.bib

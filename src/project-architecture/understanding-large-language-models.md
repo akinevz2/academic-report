@@ -1,0 +1,5 @@
+### Understanding Large Language Models
+
+Large language models impose substantially different architectural requirements depending on the workload: inference is concerned with generating responses to active user requests under tight latency constraints, and therefore benefits from streaming, cache locality, and memory capacity. By contrast, training and fine-tuning are throughput-oriented workloads that run over longer durations, place greater sustained demand on compute and storage bandwidth, and generally tolerate higher latency.
+
+This distinction shapes the project's design decisions. Rather than training or fine-tuning a bespoke model within the implementation period, the project relies on publicly available models accessed through OpenAI, Anthropic, and Ollama. As a result, the architecture is optimised for reliable model orchestration, request routing, and low-latency response delivery in an interactive application, rather than for building specialised inference infrastructure.

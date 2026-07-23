@@ -1,0 +1,18 @@
+%%{init: {
+    'themeVariables': { 'fontSize': '24px' },
+    'themeCSS': '.actor, .messageText, .labelText { font-size: 24px !important; }'
+}}%%
+sequenceDiagram
+    participant LLM as LLM Runtime
+    participant AS as Assistant Runtime
+    participant AR as AssistantToolRegistry
+    participant OP as Tool Operation
+
+    LLM->>AS: toolExecutionRequest(name, arguments)
+    AS->>AS: validateToolRequest(name, arguments)
+    AS->>AR: execute(request)
+    AR->>AR: dispatchMap().get(request.name)
+    AR->>OP: executor.apply(request)
+    OP-->>AR: result string
+    AR-->>AS: result string
+    AS-->>LLM: ToolExecutionResultMessage(result)

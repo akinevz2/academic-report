@@ -1,0 +1,3 @@
+[submodule "whilers/src"]
+	path = whilers/src
+	url = https://github.com/jakkos-net/whilers

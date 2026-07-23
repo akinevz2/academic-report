@@ -1,7 +1,13 @@
 ---
 author: |
-  Author Name
+  Kirill Nevzorov\
+  under supervision \
+  of Prof. Julie Weeds \
+  University of Sussex\
+  School of Engineering and Informatics
+email: "kn253@sussex.ac.uk"
 title: |
+  Proposal: Modelling Virtual Project Aides
   Report Title
 date: \today{}
 geometry: margin=2cm
@@ -9,7 +15,7 @@ documentclass: article
 classoption: twocolumn
 papersize: a4
 bibliography: |
-  ./references.bib
+  ./static/references.bib
 header-includes: |
   \usepackage{fancyhdr}
   \pagestyle{fancy}
@@ -18,6 +24,14 @@ header-includes: |
 
   \fancyfoot[C]{\thepage}
   \renewcommand{\headrulewidth}{0.4pt}
+  \usepackage{fancyhdr}
+  \pagestyle{fancy}
+  \fancyhead[L]{ Proposal: Modelling Virtual Project Aides }
+  \fancyhead[R]{181472 Kirill Nevzorov}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+abstract: |
+  Abstract text
 ...
 
-![TOC](./src/TOC.md)
+[TOC](./src/TOC.md)

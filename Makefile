@@ -1,40 +1,21 @@
-all: report
+.PHONY: report
+all: REPORT open
 
-.PHONY: all report clean open watch-report presentations
+src/**/*.md: 
+	@echo reading $@
 
-clean:
-	rm -f REPORT.pdf presentations/*.pdf presentations/*.html
-
-report: REPORT.pdf
-
-open: report
-	code REPORT.pdf
-
-REPORT_ENTRY := $(firstword $(wildcard REPORT.md TEMPLATE.md))
-MD_SRC := $(shell find src -type f -name '*.md' | sort)
-
-REPORT.pdf: $(REPORT_ENTRY) $(MD_SRC) references.bib include-md.lua
-	pandoc $< \
-		-s \
-		--toc \
-		--number-sections \
-		--lua-filter=./include-md.lua \
+static/report/REPORT.pdf: src/**.md
+	pandoc TEMPLATE.md static/references.bib \
+		--lua-filter=include-md.lua \
 		--citeproc \
+		--number-sections \
 		-o $@
 
-watch-report: report
-	@echo "Watching markdown files with npx chokidar-cli (Ctrl+C to stop)..."
-	@npx --yes chokidar-cli "**/*.md" \
-		-i "**/.git/**" \
-		-i "**/node_modules/**" \
-		-c "$(MAKE) --no-print-directory report"
+# figure out how to set type to beamer
+report: static/report/REPORT.pdf
 
-PRESENTATIONS := $(wildcard presentations/*.md)
-PRESENTATION_NAMES := $(notdir $(basename $(PRESENTATIONS)))
-PDF_TARGETS := $(PRESENTATION_NAMES:=.pdf)
+open: static/report/REPORT.pdf
+	code $<
 
-presentations: $(PDF_TARGETS)
-
-%.pdf: presentations/%.md
-	pandoc $< -s --lua-filter=./include-md.lua --citeproc -t beamer -o presentations/$@
-
+clean: 
+	rm static/report/REPORT.pdf

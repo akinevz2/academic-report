@@ -7,24 +7,26 @@ author: |
   School of Engineering and Informatics
 email: "kn253@sussex.ac.uk"
 title: |
-  Proposal: Modelling Virtual Project Aides
-date: \today{}
+  Proposal: Defending Against LLM Hallucinations using Lie Group Theory
+date: November 14, 2025
 geometry: margin=2cm
 documentclass: article
-classoption: twocolumn
+classoption: twocolumn, a4paper
 papersize: a4
 bibliography: |
   ./static/references.bib
 header-includes: |
   \usepackage{fancyhdr}
   \pagestyle{fancy}
-  \fancyhead[L]{ Proposal: Modelling Virtual Project Aides }
+  \fancyhead[L]{ Proposal: Defending Against LLM Hallucinations using Lie Group Theory }
   \fancyhead[R]{181472 Kirill Nevzorov}
   \fancyfoot[C]{\thepage}
   \renewcommand{\headrulewidth}{0.4pt}
-abstract: |
-  <!-- Abstract content will be inserted here by preprocessing -->
+  \raggedbottom
 ...
 
-[INTRODUCTION](./src/INTRODUCTION.md)
 [ABSTRACT](./src/ABSTRACT.md)
+
+\pagebreak{}
+
+[INTRODUCTION](./src/INTRODUCTION.md)

@@ -4,7 +4,7 @@ all: REPORT open
 src/**/*.md: 
 	@echo reading $@
 
-static/report/REPORT.pdf: src/**.md
+static/report/REPORT.pdf: src/**.md ./TEMPLATE.md
 	pandoc TEMPLATE.md static/references.bib \
 		--lua-filter=include-md.lua \
 		--citeproc \

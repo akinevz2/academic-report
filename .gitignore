@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+REPORT.pdf
+presentations/*.pdf
+presentations/*.html
+BUILDING.log
+=======
 BUILDING.log
 !*.pdf
 
@@ -6,3 +12,4 @@ BUILDING.log
 
 schematics/
 TODO.md
+>>>>>>> personal

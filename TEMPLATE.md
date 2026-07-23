@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ---
 author: |
   Kirill Nevzorov\
@@ -24,34 +23,12 @@ header-includes: |
   \fancyfoot[C]{\thepage}
   \renewcommand{\headrulewidth}{0.4pt}
 abstract: |
-  <!-- Abstract content will be inserted here by preprocessing -->
+  We wish to research the process of creating and use-
+  case testing various LLM prompts, such as prompting
+  the user for additional details relevant to their project,
+  assisting them in resumarising and elaborating on the
+  information stored within a workspace, and generating
+  intelligence from a collection of notes.
 ...
 
-[INTRODUCTION](./src/INTRODUCTION.md)
-[ABSTRACT](./src/ABSTRACT.md)
-=======
----
-author: |
-    Kirill Nevzorov\
-    under supervision \
-    of University of Sussex\
-    School of Engineering and Informatics
-title: |
-    Project Proposal
-date: \today{}
-geometry: margin=2cm
-documentclass: article
-classoption: twocolumn
-papersize: a4
-bibliography: |
-    ../report/references.bib
-header-includes: |
-    \usepackage{fancyhdr}
-    \pagestyle{fancy}
-    \fancyhead[L]{ Project Proposal }
-    \fancyhead[R]{Kirill Nevzorov}
-    
-    \fancyfoot[C]{\thepage}
-    \renewcommand{\headrulewidth}{0.4pt}
-...
->>>>>>> personal
+[TOC](./src/TOC.md)

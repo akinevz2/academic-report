@@ -20,4 +20,4 @@ header-includes: |
   \renewcommand{\headrulewidth}{0.4pt}
 ...
 
-![TOC](./src/TOC.md)
+[TOC](./src/TOC.md)

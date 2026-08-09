@@ -22,20 +22,50 @@ paradigm.
 
 ## Task 2: Span and Technique Detection
 
+### Linguistic Feature Set
+
+The tagger consumes per-token feature vectors produced by
+`LinguisticFeatures` (see `src/LinguisticFeatures.py`). Features
+are drawn from five linguistic categories and are designed to be
+sparse and interpretable so that the linear transition scorer can
+read them directly.
+
+- **Shape and morphology.** The lowercased suffixes of length 2, 3,
+  and 4; the prefixes of length 2 and 3; booleans for the presence
+  of digits, hyphens, apostrophes, and mixed casing. Suffixes
+  capture the morphology that propaganda techniques tend to anchor
+  on: `-ed` and `-ing` for *loaded language* verbs, `-ist` and
+  `-ism` for *name calling, labeling*, `-ive` and `-tion` for
+  *causal oversimplification*.
+- **Capitalisation.** `is_upper`, `is_title`, `is_lower`,
+  `is_mixed_case`, `is_sentence_initial`, `prev_is_period`, and
+  `prev_is_quote`. Title-cased tokens that are not in the
+  vocabulary are flagged as candidate proper nouns, which is a
+  strong cue for *flag waving* and *name calling, labeling*.
+- **Punctuation context.** `followed_by_comma`,
+  `followed_by_period`, `followed_by_quote`,
+  `followed_by_semicolon`, and `is_inside_parens`. Propaganda
+  spans frequently sit before commas or inside parentheticals, and
+  the closing-quote position is a strong boundary signal for spans
+  that name-call or label.
+- **Quote context.** `is_inside_quotes` (an odd-count tally of
+  open versus close quotes precedes the token) and
+  `next_is_open_quote`. Many *name calling, labeling* spans are
+  direct quotations: `<BOS> "spooks" <EOS>`.
+- **Lexical membership and position.** `in_vocabulary_bf` and
+  `is_unk` (gated by the `vocabulary` Bloom filter), plus
+  `rel_position`, `is_first`, `is_last`, and (at training time)
+  `is_at_bos` and `is_at_eos` from the gold span markers.
+
 ### Finite-State Tagger
 
-We model span detection as a regular language over a per-token feature
-vector. The state machine has four states: `OUTSIDE`, `ENTERING`,
-`INSIDE`, and `LEAVING`. Transitions are scored by a linear model over
-the feature vector at the current and previous token. The Viterbi
-algorithm selects the highest-scoring path; the predicted span is the
-maximal run of `INSIDE` states, and the predicted label is read from
-the features at the entry transition.
-
-Features per token include: word identity, suffix of length 2 and 3,
-whether the token appears in the `vocabulary` Bloom filter, a one-hot
-of the previous predicted state, and the distance to the nearest
-punctuation mark.
+We model span detection as a regular language over the per-token
+feature vector. The state machine has four states: `OUTSIDE`,
+`ENTERING`, `INSIDE`, and `LEAVING`. Transitions are scored by a
+linear model over the feature vector at the current and previous
+token. The Viterbi algorithm selects the highest-scoring path; the
+predicted span is the maximal run of `INSIDE` states, and the
+predicted label is read from the features at the entry transition.
 
 ### Alternative State Machine
 

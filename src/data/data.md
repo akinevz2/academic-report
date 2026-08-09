@@ -29,6 +29,10 @@ extract the snippet between the markers together with a fixed-width
 window of context tokens on either side. For Task 2 the BOS/EOS
 positions are retained as the gold span.
 
+For Task 2 the tokenised sentence is then passed through the
+`LinguisticFeatures` extractor (see §4) to produce the per-token
+feature vector that the finite-state tagger consumes.
+
 ## Probabilistic Structures
 
 Two Bloom filters [@bloom-1970-space] are built from the training set:

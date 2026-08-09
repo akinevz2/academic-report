@@ -13,11 +13,13 @@ nine-way variant used in the assignment.
 
 Classical approaches to propaganda and persuasion-style classification
 have relied on lexical and stylistic features fed to linear models
-[@rashkin-2017-truth; @yasser-2020-explainable]. These remain strong
-baselines because propaganda techniques are, by their nature,
-lexically anchored. Transformer-based models, especially domain-adapted
-ones, push the numbers higher [@morales-2022-context; @hidey-2020-weet],
-but at a cost in compute and reproducibility.
+[@rashkin-2017-truth]. These remain strong baselines because propaganda
+techniques are, by their nature, lexically anchored. Transformer-based
+models [@devlin-2019-bert; @vaswani-2017-attention] push the numbers
+higher, but at a cost in compute and reproducibility. The PTC shared
+tasks at SemEval-2020 [@da-san-martino-2020-semeval] established a
+benchmark for fine-grained propaganda-technique classification that
+later work has built on.
 
 ## Span Detection
 

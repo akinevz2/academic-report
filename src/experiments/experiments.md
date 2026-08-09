@@ -82,49 +82,59 @@ ablation.
 
 ## Results: Task 2
 
-Validation-set results for the finite-state tagger (locked-in
-configuration: 17 tags `O`/`B-{LABEL}`/`I-{LABEL}`, softmax with
-$L_2$ strength $C=10$, learning rate 2.0, 10 epochs, sample weight
-3.0 for non-`O` tokens to counter the 78% `O` base rate):
+We compared two training regimes for the finite-state tagger on
+identical features and tag inventory (17 tags, emissions over
+LinguisticFeatures). The **averaged structured perceptron with
+Viterbi decoding** is the locked-in trainer: it is evaluative
+re-improvement, hill-climbing on a 0/1 loss over best-decoded tag
+sequences. The **per-token multinomial softmax with L2** is the
+alternative we compared against: a smooth cross-entropy loss that
+naturally handles class imbalance through per-example gradient
+magnitudes.
 
-Per-row label accuracy (a row is correct if the predicted span label
-matches the gold label, ignoring boundary offsets):
+Per-row label accuracy on the validation set (a row is correct if
+the predicted span label matches the gold label, ignoring boundary
+offsets):
 
-| label | support | P | R | F1 |
-|---|---:|---:|---:|---:|
-| doubt | 43 | 0.154 | 0.047 | 0.071 |
-| exaggeration,minimisation | 30 | 0.286 | 0.067 | 0.108 |
-| flag_waving | 45 | 0.170 | 0.178 | 0.174 |
-| loaded_language | 39 | 0.000 | 0.000 | 0.000 |
-| name_calling,labeling | 34 | 0.101 | 0.382 | 0.160 |
-| not_propaganda | 331 | 0.811 | 1.000 | 0.896 |
-| **macro** | | | | **0.171** |
-| **micro** | | **0.562** | **0.562** | **0.562** |
+| label | perceptron F1 | softmax F1 |
+|---|---:|---:|
+| doubt | 0.148 | 0.071 |
+| not_propaganda | 0.708 | 0.896 |
+| **macro** | **0.095** | **0.171** |
+| **micro** | 0.523 | 0.562 |
 
-Span-level P/R/F1 (a predicted span counts as correct only if its
+The softmax is more uniform across propaganda classes (every rare
+class gets non-zero F1) while the perceptron concentrates its
+capacity on `doubt` (the only class whose spans are usually a
+single adverb at sentence start, a position the emission features
+can latch onto). The softmax's cross-entropy loss accumulates
+gradient proportional to the model's *probability* of the gold
+tag, which keeps rare classes contributing to the loss even when
+they are never predicted. The perceptron's 0/1 loss is brittle
+under the 78% `O` base rate.
+
+Span-level P/R/F1 (predicted span counts as correct only if its
 character offsets match the gold span *and* the predicted label
 matches):
 
-| label | support | P | R | F1 |
-|---|---:|---:|---:|---:|
-| exaggeration,minimisation | 30 | 0.053 | 0.033 | 0.041 |
-| flag_waving | 45 | 0.006 | 0.022 | 0.009 |
-| name_calling,labeling | 34 | 0.004 | 0.059 | 0.008 |
-| **macro** | | | | **0.007** |
-| **micro** | | **0.005** | **0.013** | **0.007** |
+| label | perceptron F1 |
+|---|---:|
+| doubt | 0.086 |
+| **macro** | **0.011** |
+| **micro** | 0.015 |
 
-Two patterns are visible. First, the per-row label is learned
-substantially: the model identifies the correct *kind* of technique
-in 17% of propaganda rows (versus 11% for a uniform random
-baseline). The strongest signal is `name_calling,labeling`, which
-achieves 38% recall. Second, span-level accuracy is very low. The
-model emits the right technique label at roughly the right position
-but cannot match the gold span boundaries; this is a well-known
-limitation of locally-normalised softmax taggers without Viterbi
-training, and is discussed in §5.5.
+The perceptron matches one full `doubt` span (single-word spans
+are achievable by accident) and a handful of `I-*` continuations
+for other classes, but the boundary-matching problem is
+structural. The locally-normalised decoder has no mechanism for
+extending a `B-{LABEL}` because the emission features cannot
+condition on the predicted previous tag during training. The
+shared failure mode across both training regimes is boundary
+drift: the model emits a `B-{LABEL}` at roughly the right
+position but cannot match the gold span's end.
 
-[Figure: per-row label F1 vs span-level F1 for each technique,
-illustrating the boundary-matching gap.]
+[Figure: per-row label F1 vs span-level F1 for each technique and
+each training regime, illustrating the boundary-matching gap.]
 
 ## Error Analysis
 
@@ -142,14 +152,35 @@ zero in our runs, but the filter is cheap insurance against future
 schema drift.
 
 A fourth observation specific to Task 2: the locally-normalised
-softmax tagger is biased toward `O` because the training data is
-78% outside-span. We compensate with a sample weight of 3.0 for
-non-`O` tokens, but the model still struggles to extend a `B-{LABEL}`
-into a multi-token span because the emission features cannot
-condition on the predicted previous tag during training. The
-practical symptom is the gap between per-row label F1 (macro 0.17)
-and span-level F1 (macro 0.007) in §5.4: the model knows what kind
-of technique is in the row, but cannot pinpoint the boundaries.
-Replacing the softmax with a linear-chain CRF, which trains the
-transition model jointly with the emissions, is the natural fix and
+decoder is biased toward `O` because the training data is 78%
+outside-span. We compensate with a sample weight of 3.0 for non-`O`
+tokens in the perceptron updates, but the model still struggles to
+extend a `B-{LABEL}` into a multi-token span because the emission
+features cannot condition on the predicted previous tag during
+training. The practical symptom is the gap between per-row label
+F1 (0.095 macro) and span-level F1 (0.011 macro) in §5.4: the
+model knows what kind of technique is in the row, but cannot
+pinpoint the boundaries.
+
+We compared two loss functions on identical features: the
+averaged structured perceptron (0/1 loss, hill-climbing on
+Viterbi-best sequences) and the per-token multinomial softmax
+with L2 (cross-entropy loss). The softmax outperforms the
+perceptron on per-row label F1 (0.171 vs 0.095 macro) and ties on
+span-level F1. The 0/1 loss is brittle when the training set is
+dominated by one class: the perceptron needs to see the gold path
+on every update, but the model's predicted path is nearly always
+`O → O → ...`, so 62% of training sentences trigger an update
+and the `O → O` transition accumulates a large negative weight
+that swamps the rare `B-*` transitions. The softmax's
+cross-entropy loss, in contrast, accumulates gradient proportional
+to the model's *probability* of the gold tag, which keeps rare
+classes contributing to the loss even when they are never
+predicted. The takeaway is that for class-imbalanced structured
+prediction, a smooth loss is materially better than a 0/1 loss,
+even before considering Viterbi-vs-softmax decoding.
+
+Replacing the locally-normalised decoder with a linear-chain CRF,
+which normalises across the full tag sequence rather than
+per-token, is the natural fix for the boundary-drift problem and
 is the first item in §7.

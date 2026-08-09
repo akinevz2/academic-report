@@ -1,8 +1,10 @@
 ---
 author: |
-  Author Name
+  Kirill Nevzorov \
+  Advanced Natural Language Engineering (G5114) \
+  University of Sussex
 title: |
-  Report Title
+  Propaganda Detection with Bag-of-Words and Finite-State Models
 date: \today{}
 geometry: margin=2cm
 documentclass: article
@@ -13,8 +15,8 @@ bibliography: |
 header-includes: |
   \usepackage{fancyhdr}
   \pagestyle{fancy}
-  \fancyhead[L]{ Report Title }
-  \fancyhead[R]{Author Name}
+  \fancyhead[L]{ Propaganda Detection }
+  \fancyhead[R]{Kirill Nevzorov}
 
   \fancyfoot[C]{\thepage}
   \renewcommand{\headrulewidth}{0.4pt}

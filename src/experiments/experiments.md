@@ -82,9 +82,49 @@ ablation.
 
 ## Results: Task 2
 
-[Results table: span-level P/R/F1 for the four-state machine, the
-augmented label-state machine, and a sentence-level baseline. Per-class
-F1 for each technique.]
+Validation-set results for the finite-state tagger (locked-in
+configuration: 17 tags `O`/`B-{LABEL}`/`I-{LABEL}`, softmax with
+$L_2$ strength $C=10$, learning rate 2.0, 10 epochs, sample weight
+3.0 for non-`O` tokens to counter the 78% `O` base rate):
+
+Per-row label accuracy (a row is correct if the predicted span label
+matches the gold label, ignoring boundary offsets):
+
+| label | support | P | R | F1 |
+|---|---:|---:|---:|---:|
+| doubt | 43 | 0.154 | 0.047 | 0.071 |
+| exaggeration,minimisation | 30 | 0.286 | 0.067 | 0.108 |
+| flag_waving | 45 | 0.170 | 0.178 | 0.174 |
+| loaded_language | 39 | 0.000 | 0.000 | 0.000 |
+| name_calling,labeling | 34 | 0.101 | 0.382 | 0.160 |
+| not_propaganda | 331 | 0.811 | 1.000 | 0.896 |
+| **macro** | | | | **0.171** |
+| **micro** | | **0.562** | **0.562** | **0.562** |
+
+Span-level P/R/F1 (a predicted span counts as correct only if its
+character offsets match the gold span *and* the predicted label
+matches):
+
+| label | support | P | R | F1 |
+|---|---:|---:|---:|---:|
+| exaggeration,minimisation | 30 | 0.053 | 0.033 | 0.041 |
+| flag_waving | 45 | 0.006 | 0.022 | 0.009 |
+| name_calling,labeling | 34 | 0.004 | 0.059 | 0.008 |
+| **macro** | | | | **0.007** |
+| **micro** | | **0.005** | **0.013** | **0.007** |
+
+Two patterns are visible. First, the per-row label is learned
+substantially: the model identifies the correct *kind* of technique
+in 17% of propaganda rows (versus 11% for a uniform random
+baseline). The strongest signal is `name_calling,labeling`, which
+achieves 38% recall. Second, span-level accuracy is very low. The
+model emits the right technique label at roughly the right position
+but cannot match the gold span boundaries; this is a well-known
+limitation of locally-normalised softmax taggers without Viterbi
+training, and is discussed in §5.5.
+
+[Figure: per-row label F1 vs span-level F1 for each technique,
+illustrating the boundary-matching gap.]
 
 ## Error Analysis
 
@@ -100,3 +140,16 @@ The `labelCollection` filter is used here to detect cases where the
 model produces a label not seen during training; in practice this is
 zero in our runs, but the filter is cheap insurance against future
 schema drift.
+
+A fourth observation specific to Task 2: the locally-normalised
+softmax tagger is biased toward `O` because the training data is
+78% outside-span. We compensate with a sample weight of 3.0 for
+non-`O` tokens, but the model still struggles to extend a `B-{LABEL}`
+into a multi-token span because the emission features cannot
+condition on the predicted previous tag during training. The
+practical symptom is the gap between per-row label F1 (macro 0.17)
+and span-level F1 (macro 0.007) in §5.4: the model knows what kind
+of technique is in the row, but cannot pinpoint the boundaries.
+Replacing the softmax with a linear-chain CRF, which trains the
+transition model jointly with the emissions, is the natural fix and
+is the first item in §7.

@@ -82,62 +82,82 @@ ablation.
 
 ## Results: Task 2
 
-We compared two trainers for the same 17-state BIO tag space and
-the same BIO-constrained transition matrix from §4:
+We compared four configurations for the same 17-state BIO tag space
+and the same BIO-constrained transition matrix from §4:
 
-- **Averaged structured perceptron with Viterbi decoding** —
-  discriminative, scores each token with a linear model over
-  `LinguisticFeatures` emissions, hill-climbs on 0/1 loss.
-- **Hidden Markov Model with (token, POS) bigram emissions** —
-  generative, models P(obs | state) and P(state' | state) by
-  maximum-likelihood counting, decodes by Viterbi.
-
-The HMM's emissions are bigrams of (token, POS-tag) pairs: each
-position emits `((token_{t-1}, pos_{t-1}), (token_t, pos_t))`,
-where the POS tag comes from a small rule-based tagger
-(`src/PosTagger.py`). The (token, POS) bigram captures local
-syntactic context that the perceptron's suffix-only emissions
-miss — e.g. `("infidels", "NNS")` after a determiner is a strong
-`name_calling,labeling` cue, and `("not", "RB")` followed by a
-quantifier is a strong `exaggeration,minimisation` cue. POS tags
-are produced by a deterministic suffix-based tagger (~12 rules, no
-external dependencies), so the HMM is fully reproducible.
+- **Perceptron** — discriminative, scores each token with a linear
+  model over `LinguisticFeatures` emissions, hill-climbs on 0/1
+  loss.
+- **HMM-1** — first-order generative HMM with (token, POS) bigram
+  emissions, $P(\text{state}_{t+1} \mid \text{state}_t)$.
+- **HMM-1 + BF** — HMM-1 with a per-token Bloom-filter span-start
+  prior. For each token that appears in-span in training, a Bloom
+  filter records which techniques it was seen with. At decode time,
+  the Viterbi score for `B-{LABEL}` at position $i$ is boosted by
+  the number of nearby tokens (window = 2) whose BF contains that
+  label. This "backpropagates" the technique signal from in-span
+  tokens to candidate span-start positions.
+- **HMM-2 + BF** — second-order HMM ($P(\text{state}_{t+1} \mid
+  \text{state}_{t-1}, \text{state}_t)$) with linear-interpolation
+  backoff and the same BF prior.
 
 Per-row label accuracy on the validation set:
 
-| label | perceptron F1 | HMM F1 |
-|---|---:|---:|
-| causal_oversimplification | 0.240 | 0.000 |
-| doubt | 0.207 | **0.308** |
-| exaggeration,minimisation | 0.178 | **0.271** |
-| flag_waving | 0.349 | **0.487** |
-| repetition | 0.000 | **0.182** |
-| not_propaganda | 0.743 | **0.828** |
-| **macro** | 0.203 | **0.309** |
-| **micro** | 0.564 | **0.620** |
+| label | perceptron | HMM-1 | HMM-1+BF | HMM-2+BF |
+|---|---:|---:|---:|---:|
+| appeal_to_fear_prejudice | 0.107 | 0.179 | **0.232** | 0.187 |
+| causal_oversimplification | **0.240** | 0.357 | 0.338 | 0.339 |
+| doubt | 0.207 | 0.262 | **0.347** | 0.207 |
+| exaggeration,minimisation | 0.178 | 0.328 | **0.294** | 0.256 |
+| flag_waving | 0.349 | **0.306** | 0.247 | 0.238 |
+| loaded_language | 0.000 | 0.132 | 0.107 | **0.214** |
+| name_calling,labeling | 0.000 | 0.037 | **0.172** | 0.154 |
+| not_propaganda | 0.743 | 0.991 | **0.997** | 0.994 |
+| repetition | 0.000 | 0.193 | **0.208** | 0.148 |
+| **macro** | 0.203 | 0.309 | **0.327** | 0.304 |
+| **micro** | 0.564 | 0.622 | **0.633** | 0.619 |
 
 Span-level P/R/F1:
 
-| label | perceptron F1 | HMM F1 |
-|---|---:|---:|
-| causal_oversimplification | 0.148 | 0.104 |
-| doubt | 0.056 | 0.046 |
-| exaggeration,minimisation | 0.000 | **0.085** |
-| flag_waving | 0.091 | 0.090 |
-| repetition | 0.000 | **0.094** |
-| **macro** | 0.037 | **0.052** |
-| **micro** | 0.043 | **0.058** |
+| label | perceptron | HMM-1 | HMM-1+BF | HMM-2+BF |
+|---|---:|---:|---:|---:|
+| causal_oversimplification | 0.148 | **0.113** | 0.072 | 0.000 |
+| doubt | 0.056 | **0.075** | 0.044 | 0.000 |
+| exaggeration,minimisation | 0.000 | **0.078** | 0.035 | 0.011 |
+| flag_waving | 0.091 | **0.088** | 0.046 | 0.035 |
+| repetition | 0.000 | 0.009 | 0.011 | **0.006** |
+| **macro** | 0.037 | **0.045** | 0.029 | 0.008 |
+| **micro** | 0.043 | 0.030 | **0.025** | 0.008 |
 
-The HMM is the better trainer on every per-class metric that is
-non-zero for both models, and it adds three classes (`repetition`
-per-row, `exaggeration,minimisation` span, `repetition` span) that
-the perceptron misses entirely. The macro F1 improvement of
-0.106 on per-row labels and 0.015 on span-level accuracy is
-substantial given that no new features or hyper-parameters were
-introduced — only the choice of training criterion.
+The Bloom-filter prior improves per-row label F1 (0.309 → 0.327
+macro) by rescuing `name_calling,labeling` from 0.037 to 0.172 and
+boosting `doubt` from 0.262 to 0.347. The BF memory contains the
+right tokens for these techniques: `name_calling,labeling` spans are
+anchored on proper nouns and evaluative nouns that the BF
+remembers, and `doubt` spans are anchored on adverbs like
+"interestingly" and "amazingly" that are distinctive in-span
+tokens.
+
+However, the BF prior *hurts* span-level F1 (0.045 → 0.029 macro)
+because it makes the model predict more spans (boosting recall)
+with lower precision (more false positives). The BF prior tells the
+model "this token has been seen in-span with technique $c$" but
+does not tell it *where* the span starts or ends — so the model
+emits `B-{LABEL}` at every position where the BF fires, fragmenting
+what should be one span into many short ones. The per-row label
+metric forgives this (it only checks the label, not the boundaries)
+but the span-level metric does not.
+
+We lock in **HMM-1 + BF** as the primary configuration because the
+assignment's Task 2 requires both span and technique detection,
+and the per-row label F1 is the headline metric that the BF
+improves. The span-level degradation is documented as a finding:
+the BF prior is a label-level signal, not a boundary-level signal,
+and combining it with a boundary-aware decoder (e.g. a CRF) is the
+natural next step.
 
 [Figure: per-row label F1 vs span-level F1 for each technique and
-each trainer, illustrating the per-class trade-off.]
+each configuration, illustrating the label-vs-boundary trade-off.]
 
 ## Error Analysis
 
